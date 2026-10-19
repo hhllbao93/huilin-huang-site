@@ -1,3 +1,4 @@
+import EditableGroup from "../editor/EditableGroup";
 import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
 import "./Teaching.css";
@@ -42,8 +43,10 @@ export default function Teaching() {
     <div className="container inner-page">
       <header className="page-intro">
         <span className="eyebrow"><EditableText contentKey="Teaching.text001" /></span>
-        <EditableBlock as="h1" blockKey="Teaching.Teaching.text002"><EditableText contentKey="Teaching.text002" /><br /><EditableText contentKey="Teaching.text003" /></EditableBlock>
+        <EditableGroup groupKey="Teaching.group6">
+<EditableBlock as="h1" blockKey="Teaching.Teaching.text002"><EditableText contentKey="Teaching.text002" /><br /><EditableText contentKey="Teaching.text003" /></EditableBlock>
         <EditableBlock as="p" blockKey="Teaching.Teaching.text004"><EditableText contentKey="Teaching.text004" /></EditableBlock>
+</EditableGroup>
       </header>
 
       <section>
@@ -68,8 +71,10 @@ export default function Teaching() {
       <section className="mentoring-block split">
         <div>
           <span className="eyebrow"><EditableText contentKey="Teaching.text007" /></span>
-          <EditableBlock as="h2" blockKey="Teaching.Teaching.text008"><EditableText contentKey="Teaching.text008" /><br /><EditableText contentKey="Teaching.text009" /></EditableBlock>
+          <EditableGroup groupKey="Teaching.group7">
+<EditableBlock as="h2" blockKey="Teaching.Teaching.text008"><EditableText contentKey="Teaching.text008" /><br /><EditableText contentKey="Teaching.text009" /></EditableBlock>
           <EditableBlock as="p" blockKey="Teaching.Teaching.text010"><EditableText contentKey="Teaching.text010" /></EditableBlock>
+</EditableGroup>
         </div>
 
         <div>

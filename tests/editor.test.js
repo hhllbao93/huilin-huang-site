@@ -103,3 +103,45 @@ test('save accepts known paragraph settings and rejects unknown blocks or arbitr
     assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __blockSettings: JSON.stringify(invalid) } } })).statusCode, 400);
   }
 });
+
+test('formatting persists, resets independently, and preserves deleted state and original text', async () => {
+  const { withBlockSetting, readBlockSettings, blockStyle } = await import('../src/editor/block-settings.js');
+  const key = 'Research.Research.text004';
+  const styled = withBlockSetting(initialContent, key, { color: '#AA0088', italic: true, width: 65, align: 'center', hidden: true });
+  const settings = readBlockSettings(styled)[key];
+  assert.equal(blockStyle(settings).fontStyle, 'italic');
+  assert.equal(blockStyle(settings).width, '65%');
+  assert.equal(blockStyle(settings).marginLeft, 'auto');
+  assert.equal(styled['Research.text004'], initialContent['Research.text004']);
+  const reset = withBlockSetting(styled, key, { color: null, italic: null, width: null, align: null });
+  assert.deepEqual(readBlockSettings(reset)[key], { hidden: true });
+});
+test('reorder moves both directions, survives reload, preserves text and skips deleted paragraphs', async () => {
+  const { withMovedBlock, orderedGroup, groupForBlock, withBlockSetting } = await import('../src/editor/block-settings.js');
+  const from = 'Home.Home.text025'; const group = groupForBlock(from);
+  const order = orderedGroup(initialContent, group); const to = order.at(-1);
+  const moved = withMovedBlock(initialContent, group, from, to);
+  assert.equal(orderedGroup(JSON.parse(JSON.stringify(moved)), group).at(-1), from);
+  assert.deepEqual(orderedGroup(withMovedBlock(moved, group, from, order[1]), group), order);
+  assert.equal(moved['Home.text025'], initialContent['Home.text025']);
+  assert.throws(() => withMovedBlock(initialContent, group, from, 'Research.Research.text004'));
+  assert.throws(() => withMovedBlock(withBlockSetting(initialContent, to, { hidden: true }), group, from, to));
+});
+test('API accepts formatting and rejects malformed layout, colors, and style injection', async () => {
+  const { groupForBlock, orderedGroup } = await import('../src/editor/block-settings.js');
+  const key = 'Research.Research.text004'; mockGitHub();
+  const save = (settings) => request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __blockSettings: JSON.stringify({ [key]: settings }) } } });
+  assert.equal((await save({ color: '#336699', italic: true, width: 75, align: 'right', order: 0 })).statusCode, 200);
+  for (const invalid of [{ color: 'red;position:fixed' }, { color: '#123' }, { italic: 'true' }, { width: -50 }, { width: 200 }, { align: 'fixed' }, { order: -1 }, { order: 1.5 }, { order: orderedGroup(initialContent, groupForBlock(key)).length }]) {
+    assert.equal((await save(invalid)).statusCode, 400);
+  }
+});
+test('layout manifest uses real, unique blocks and every group supports independent ordering', async () => {
+  const { default: groups } = await import('../src/data/editable-groups.json', { with: { type: 'json' } });
+  const { default: blocks } = await import('../src/data/editable-blocks.json', { with: { type: 'json' } });
+  const seen = new Set();
+  for (const keys of Object.values(groups)) {
+    assert.ok(keys.length >= 2);
+    for (const key of keys) { assert.ok(blocks.includes(key)); assert.ok(!seen.has(key)); seen.add(key); }
+  }
+});

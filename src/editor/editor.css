@@ -16,3 +16,15 @@ body:has(.editor-toolbar) { padding-bottom: 160px; }
 .editor-font-size { display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
 .editor-font-size select { color: #263e32; background: white; border: 1px solid #c9d3cd; border-radius: 6px; font: 14px system-ui, sans-serif; padding: .5rem; }
 .editor-toolbar .editor-delete { color: #9b3220; border-color: #d9b4aa; }
+
+.editor-block { position: relative; }
+.editor-drag-handle { position: absolute; left: -25px; top: 0; width: 22px; height: 26px; padding: 0; border: 1px solid #cad4ce; border-radius: 4px; background: #f8faf8; color: #263e32; font: 20px/1 system-ui; cursor: grab; opacity: .65; z-index: 2; }
+.editor-drag-handle:active { cursor: grabbing; }
+.editor-drag-handle:hover, .editor-drag-handle:focus { opacity: 1; outline: 2px solid #b14f2d; }
+.editor-custom-color em, .editor-custom-color a, .editor-custom-color span { color: inherit; }
+.editor-custom-italic em, .editor-custom-italic span { font-style: inherit; }
+.editor-toolbar { max-height: min(44vh, 340px); overflow-y: auto; }
+.editor-toolbar input[type="color"] { width: 44px; height: 35px; padding: 2px; border: 1px solid #c9d3cd; border-radius: 6px; background: white; }
+.editor-toolbar button[aria-pressed="true"] { background: #dce8df; border-color: #263e32; }
+body:has(.editor-toolbar) { padding-bottom: min(44vh, 360px); }
+@media (max-width: 600px) { .editor-toolbar { gap: .4rem; padding: 10px; bottom: 6px; } .editor-toolbar button { padding: .45rem .65rem; } .editor-drag-handle { left: -18px; width: 17px; } }

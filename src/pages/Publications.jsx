@@ -1,3 +1,4 @@
+import EditableGroup from "../editor/EditableGroup";
 import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
 import { useSyncExternalStore } from "react";
@@ -49,8 +50,10 @@ export default function Publications() {
     <div className="container inner-page">
       <header className="page-intro">
         <span className="eyebrow"><EditableText contentKey="Publications.text001" /></span>
-        <EditableBlock as="h1" blockKey="Publications.Publications.text002"><EditableText contentKey="Publications.text002" /><br /><EditableText contentKey="Publications.text003" /></EditableBlock>
+        <EditableGroup groupKey="Publications.group19">
+<EditableBlock as="h1" blockKey="Publications.Publications.text002"><EditableText contentKey="Publications.text002" /><br /><EditableText contentKey="Publications.text003" /></EditableBlock>
         <EditableBlock as="p" blockKey="Publications.Publications.text004"><EditableText contentKey="Publications.text004" /></EditableBlock>
+</EditableGroup>
       </header>
       <div className="publication-toolbar">
         <label className="search-field">
@@ -138,8 +141,10 @@ export default function Publications() {
       </div>
       {filtered.length === 0 && (
         <div className="empty-state">
-          <EditableBlock as="h2" blockKey="Publications.Publications.text009"><EditableText contentKey="Publications.text009" /></EditableBlock>
+          <EditableGroup groupKey="Publications.group20">
+<EditableBlock as="h2" blockKey="Publications.Publications.text009"><EditableText contentKey="Publications.text009" /></EditableBlock>
           <EditableBlock as="p" blockKey="Publications.Publications.text010"><EditableText contentKey="Publications.text010" /></EditableBlock>
+</EditableGroup>
           <button className="button" onClick={() => setParams({})}><EditableText contentKey="Publications.text011" /></button>
         </div>
       )}

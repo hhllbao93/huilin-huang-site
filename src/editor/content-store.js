@@ -1,4 +1,4 @@
-import { withBlockSetting, withDeletedBlocksRestored } from './block-settings';
+import { withMovedBlock, withBlockSetting, withDeletedBlocksRestored } from './block-settings';
 import initialContent from '../data/site-content.json';
 
 let state = { content: initialContent, baseline: initialContent, editing: false, authenticated: false, busy: false, message: '', sha: null };
@@ -16,4 +16,9 @@ export function changeBlock(patch) {
 }
 export function restoreDeletedBlocks() {
   updateState({ content: withDeletedBlocksRestored(state.content), message: '' });
+}
+
+export function moveBlock(group, from, to) {
+  if (state.busy || !state.editing) return;
+  updateState({ content: withMovedBlock(state.content, group, from, to), message: '' });
 }
