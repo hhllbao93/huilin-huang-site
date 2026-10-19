@@ -1,3 +1,4 @@
+import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
 import "./Teaching.css";
 
@@ -41,13 +42,13 @@ export default function Teaching() {
     <div className="container inner-page">
       <header className="page-intro">
         <span className="eyebrow"><EditableText contentKey="Teaching.text001" /></span>
-        <h1><EditableText contentKey="Teaching.text002" /><br /><EditableText contentKey="Teaching.text003" /></h1>
-        <p><EditableText contentKey="Teaching.text004" /></p>
+        <EditableBlock as="h1" blockKey="Teaching.Teaching.text002"><EditableText contentKey="Teaching.text002" /><br /><EditableText contentKey="Teaching.text003" /></EditableBlock>
+        <EditableBlock as="p" blockKey="Teaching.Teaching.text004"><EditableText contentKey="Teaching.text004" /></EditableBlock>
       </header>
 
       <section>
         <span className="eyebrow"><EditableText contentKey="Teaching.text005" /></span>
-        <h2><EditableText contentKey="Teaching.text006" /></h2>
+        <EditableBlock as="h2" blockKey="Teaching.Teaching.text006"><EditableText contentKey="Teaching.text006" /></EditableBlock>
         <div className="row-list">
           {courses.map(([year, title, institution], courseIndex) => (
             <article
@@ -56,8 +57,8 @@ export default function Teaching() {
             >
               <span className="detail-year"><EditableText contentKey={`courses.${courseIndex}.year`}>{year}</EditableText></span>
               <div>
-                <h3><EditableText contentKey={`courses.${courseIndex}.title`}>{title}</EditableText></h3>
-                <p><EditableText contentKey={`courses.${courseIndex}.institution`}>{institution}</EditableText></p>
+                <EditableBlock as="h3" blockKey={`Teaching.courses.${courseIndex}.title`}><EditableText contentKey={`courses.${courseIndex}.title`}>{title}</EditableText></EditableBlock>
+                <EditableBlock as="p" blockKey={`Teaching.courses.${courseIndex}.institution`}><EditableText contentKey={`courses.${courseIndex}.institution`}>{institution}</EditableText></EditableBlock>
               </div>
             </article>
           ))}
@@ -67,18 +68,18 @@ export default function Teaching() {
       <section className="mentoring-block split">
         <div>
           <span className="eyebrow"><EditableText contentKey="Teaching.text007" /></span>
-          <h2><EditableText contentKey="Teaching.text008" /><br /><EditableText contentKey="Teaching.text009" /></h2>
-          <p><EditableText contentKey="Teaching.text010" /></p>
+          <EditableBlock as="h2" blockKey="Teaching.Teaching.text008"><EditableText contentKey="Teaching.text008" /><br /><EditableText contentKey="Teaching.text009" /></EditableBlock>
+          <EditableBlock as="p" blockKey="Teaching.Teaching.text010"><EditableText contentKey="Teaching.text010" /></EditableBlock>
         </div>
 
         <div>
-          <h3><EditableText contentKey="Teaching.text011" /></h3>
+          <EditableBlock as="h3" blockKey="Teaching.Teaching.text011"><EditableText contentKey="Teaching.text011" /></EditableBlock>
           {mentoring.map(({ title, students }, mentoringIndex) => (
             <div className="detail-row" key={title}>
               <span className="detail-year"><EditableText contentKey="Teaching.text012" /></span>
               <div>
-                <h3><EditableText contentKey={`mentoring.${mentoringIndex}.title`}>{title}</EditableText></h3>
-                <p><EditableText contentKey={`mentoring.${mentoringIndex}.students`}>{students}</EditableText></p>
+                <EditableBlock as="h3" blockKey={`Teaching.mentoring.${mentoringIndex}.title`}><EditableText contentKey={`mentoring.${mentoringIndex}.title`}>{title}</EditableText></EditableBlock>
+                <EditableBlock as="p" blockKey={`Teaching.mentoring.${mentoringIndex}.students`}><EditableText contentKey={`mentoring.${mentoringIndex}.students`}>{students}</EditableText></EditableBlock>
               </div>
             </div>
           ))}

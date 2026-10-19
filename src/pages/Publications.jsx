@@ -1,3 +1,4 @@
+import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
 import { useSyncExternalStore } from "react";
 import { getSnapshot, subscribe } from "../editor/content-store";
@@ -48,8 +49,8 @@ export default function Publications() {
     <div className="container inner-page">
       <header className="page-intro">
         <span className="eyebrow"><EditableText contentKey="Publications.text001" /></span>
-        <h1><EditableText contentKey="Publications.text002" /><br /><EditableText contentKey="Publications.text003" /></h1>
-        <p><EditableText contentKey="Publications.text004" /></p>
+        <EditableBlock as="h1" blockKey="Publications.Publications.text002"><EditableText contentKey="Publications.text002" /><br /><EditableText contentKey="Publications.text003" /></EditableBlock>
+        <EditableBlock as="p" blockKey="Publications.Publications.text004"><EditableText contentKey="Publications.text004" /></EditableBlock>
       </header>
       <div className="publication-toolbar">
         <label className="search-field">
@@ -116,7 +117,7 @@ export default function Publications() {
               <span className="publication-journal">
                 <EditableText contentKey={`${p.editKey}.journal`}>{p.journal || "Work in progress"}</EditableText>
               </span>
-              <h2>
+              <EditableBlock as="h2" blockKey={`Publications.${p.editKey}.title`}>
                 {p.doi ? (
                   <a
                     href={"https://doi.org/" + p.doi}
@@ -129,16 +130,16 @@ export default function Publications() {
                 ) : (
                   <EditableText contentKey={`${p.editKey}.title`}>{p.title}</EditableText>
                 )}
-              </h2>
-              <p>{<EditableText contentKey={`${p.editKey}.authors`}>{p.authors}</EditableText>}</p>
+              </EditableBlock>
+              <EditableBlock as="p" blockKey={`Publications.${p.editKey}.authors`}>{<EditableText contentKey={`${p.editKey}.authors`}>{p.authors}</EditableText>}</EditableBlock>
             </div>
           </article>
         ))}
       </div>
       {filtered.length === 0 && (
         <div className="empty-state">
-          <h2><EditableText contentKey="Publications.text009" /></h2>
-          <p><EditableText contentKey="Publications.text010" /></p>
+          <EditableBlock as="h2" blockKey="Publications.Publications.text009"><EditableText contentKey="Publications.text009" /></EditableBlock>
+          <EditableBlock as="p" blockKey="Publications.Publications.text010"><EditableText contentKey="Publications.text010" /></EditableBlock>
           <button className="button" onClick={() => setParams({})}><EditableText contentKey="Publications.text011" /></button>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useEffect, useSyncExternalStore } from 'react';
-import { getSnapshot, pendingChanges, subscribe, updateState } from './content-store';
+import { changeBlock, getSnapshot, pendingChanges, restoreDeletedBlocks, subscribe, updateState } from './content-store';
+import { FONT_SIZES, readBlockSettings } from './block-settings';
 import './editor.css';
 
 async function api(action, body) {
@@ -30,6 +31,10 @@ async function startEditing() {
 export default function EditorToolbar() {
   const state = useSyncExternalStore(subscribe, getSnapshot);
   const dirty = Object.keys(pendingChanges()).length;
+  const blocks = readBlockSettings(state.content);
+  const selected = blocks[state.selectedBlock] || {};
+  const hiddenCount = Object.values(blocks).filter((block) => block.hidden).length;
+  const kind = state.selectedKind === 'p' ? 'paragraph' : 'heading';
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('editor_error')) {
@@ -77,8 +82,18 @@ export default function EditorToolbar() {
   return (
     <aside className="editor-toolbar" aria-label="Website editor">
       <div><strong>{state.editing ? 'Click any outlined text to edit' : 'Preview your changes'}</strong><small>{dirty ? `${dirty} unsaved change${dirty === 1 ? '' : 's'}` : 'All changes saved'}</small></div>
+      {state.editing && <>
+        <label className="editor-font-size">Font size
+          <select aria-label="Selected paragraph or heading font size" disabled={state.busy || !state.selectedBlock} value={selected.size || 'default'} onChange={(event) => changeBlock({ size: event.target.value === 'default' ? null : Number(event.target.value) })}>
+            <option value="default">Default</option>
+            {FONT_SIZES.map((size) => <option key={size} value={size}>{size}px</option>)}
+          </select>
+        </label>
+        <button className="editor-delete" type="button" disabled={state.busy || !state.selectedBlock} onClick={() => changeBlock({ hidden: true })}>Delete {kind}</button>
+      </>}
+      {hiddenCount > 0 && <button type="button" disabled={state.busy} onClick={restoreDeletedBlocks}>Restore deleted ({hiddenCount})</button>}
       <button type="button" disabled={state.busy} onClick={() => updateState({ editing: !state.editing })}>{state.editing ? 'Preview' : 'Continue editing'}</button>
-      <button type="button" disabled={state.busy || !dirty} onClick={() => { if (window.confirm('Discard all unsaved text changes?')) updateState({ content: state.baseline, message: '' }); }}>Undo changes</button>
+      <button type="button" disabled={state.busy || !dirty} onClick={() => { if (window.confirm('Discard all unsaved text changes?')) updateState({ content: state.baseline, selectedBlock: null, message: '' }); }}>Undo changes</button>
       <button className="editor-publish" type="button" disabled={state.busy || !dirty} onClick={publish}>{state.busy ? 'Saving…' : 'Save & publish'}</button>
       <button type="button" disabled={state.busy} onClick={exit}>Exit</button>
       {state.message && <p role="status">{state.message}</p>}

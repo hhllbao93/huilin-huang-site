@@ -11,3 +11,8 @@
 .editor-toolbar button:disabled { opacity: .45; cursor: default; }
 .editor-toolbar p { flex-basis: 100%; margin: 0; }
 body:has(.editor-toolbar) { padding-bottom: 160px; }
+
+.editor-selected-block { outline: 2px solid #b14f2d; outline-offset: 8px; }
+.editor-font-size { display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+.editor-font-size select { color: #263e32; background: white; border: 1px solid #c9d3cd; border-radius: 6px; font: 14px system-ui, sans-serif; padding: .5rem; }
+.editor-toolbar .editor-delete { color: #9b3220; border-color: #d9b4aa; }
