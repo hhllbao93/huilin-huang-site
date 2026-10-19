@@ -3,7 +3,7 @@ import { changeText, getSnapshot, subscribe } from './content-store';
 
 export default function EditableText({ contentKey, children }) {
   const state = useSyncExternalStore(subscribe, getSnapshot);
-  const value = state.content[contentKey] ?? children;
+  const value = state.content[contentKey] ?? children ?? '';
   const field = useRef(null);
   useLayoutEffect(() => {
     if (field.current && document.activeElement !== field.current) {
