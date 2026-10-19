@@ -133,7 +133,8 @@ export default function EditorToolbar() {
         </label>
         <button type="button" disabled={disabled || position <= 0} onClick={() => moveBlock(group, state.selectedBlock, visible[position - 1])}>↑ Move up</button>
         <button type="button" disabled={disabled || position < 0 || position >= visible.length - 1} onClick={() => moveBlock(group, state.selectedBlock, visible[position + 1])}>↓ Move down</button>
-        <button type="button" disabled={disabled} onClick={() => changeBlock({ size: null, color: null, italic: null, width: null, align: null })}>Reset style</button>
+        <button type="button" disabled={disabled} onClick={() => changeBlock({ size: null, color: null, italic: null, width: null, align: null, compact: null })}>Reset style</button>
+        {state.selectedBlock && /^h[1-6]$/.test(state.selectedKind || '') && <button type="button" disabled={state.busy} onClick={() => { updateState({ textSelection: [] }); changeBlock({ compact: selected.compact ? null : true }); }}>{selected.compact ? 'Restore line breaks' : 'Remove empty lines'}</button>}
         <button className="editor-delete" type="button" disabled={state.busy || !state.selectedBlock} onClick={() => changeBlock({ hidden: true })}>Delete {kind}</button>
       </>}
       {hiddenCount > 0 && <button type="button" disabled={state.busy} onClick={restoreDeletedBlocks}>Restore deleted ({hiddenCount})</button>}

@@ -1,3 +1,4 @@
+import EditableSections, { EditableSection } from "../editor/EditableSections";
 import EditableGroup from "../editor/EditableGroup";
 import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
@@ -23,7 +24,8 @@ export default function Ourteam() {
         <EditableBlock as="p" blockKey="Ourteam.Ourteam.text004"><EditableText contentKey="Ourteam.text004" /></EditableBlock>
 </EditableGroup>
       </header>
-      <section className="pi-profile">
+      <EditableSections group="Ourteam">
+      <EditableSection sectionKey="profile" label="Huilin introduction" className="pi-profile">
         <img className="pi-photo" src={huilin} alt="Dr. Huilin Huang" />
         <div>
           <span className="eyebrow"><EditableText contentKey="Ourteam.text005" /></span>
@@ -48,8 +50,8 @@ export default function Ourteam() {
               <strong><EditableText contentKey="Ourteam.text015" /></strong><EditableText contentKey="Ourteam.text016" /></EditableBlock>
           </div>
         </div>
-      </section>
-      <section className="people-section">
+      </EditableSection>
+      <EditableSection sectionKey="students" label="Students" className="people-section">
         <span className="eyebrow"><EditableText contentKey="Ourteam.text017" /></span>
         <EditableBlock as="h2" blockKey="Ourteam.Ourteam.text018"><EditableText contentKey="Ourteam.text018" /></EditableBlock>
         <div className="people-grid">
@@ -69,8 +71,8 @@ export default function Ourteam() {
             </article>
           ))}
         </div>
-      </section>
-      <section className="split people-section">
+      </EditableSection>
+      <EditableSection sectionKey="experience" label="Experience and service" className="split people-section">
         <div>
           <span className="eyebrow"><EditableText contentKey="Ourteam.text022" /></span>
           <EditableBlock as="h2" blockKey="Ourteam.Ourteam.text023"><EditableText contentKey="Ourteam.text023" /><br /><EditableText contentKey="Ourteam.text024" /></EditableBlock>
@@ -112,8 +114,8 @@ export default function Ourteam() {
             <li><EditableText contentKey="Ourteam.text036" /></li>
           </ul>
         </div>
-      </section>
-      <div className="join-band">
+      </EditableSection>
+      <EditableSection as="div" sectionKey="join" label="Join the team" className="join-band">
         <div>
           <EditableGroup groupKey="Ourteam.group15">
 <EditableBlock as="h2" blockKey="Ourteam.Ourteam.text037"><EditableText contentKey="Ourteam.text037" /></EditableBlock>
@@ -122,7 +124,8 @@ export default function Ourteam() {
         </div>
         <Link className="button" to="/opportunities"><EditableText contentKey="Ourteam.text039" /><FiArrowUpRight />
         </Link>
-      </div>
+      </EditableSection>
+      </EditableSections>
     </div>
   );
 }

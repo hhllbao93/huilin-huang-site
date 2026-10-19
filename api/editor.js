@@ -1,3 +1,4 @@
+import { SECTION_ORDER_KEY, validSectionOrder } from '../src/editor/section-order.js';
 import { INLINE_STYLES_KEY, validInlineStyles } from '../src/editor/inline-styles.js';
 import { BLOCK_SETTINGS_KEY, validBlockSettings } from '../src/editor/block-settings.js';
 import { createCipheriv, createDecipheriv, createHash, randomBytes, timingSafeEqual } from 'node:crypto';
@@ -111,9 +112,10 @@ export default async function handler(req, res) {
     if (!body || body.sha !== current.sha) return json(res, 409, { error: 'Someone updated the website. Copy your changes, reload the editor, and try again.' });
     if (!body.changes || Array.isArray(body.changes) || typeof body.changes !== 'object' || !Object.keys(body.changes).length) return json(res, 400, { error: 'No text changes supplied.' });
     for (const [key, value] of Object.entries(body.changes)) {
-      if ((key !== INLINE_STYLES_KEY && (!Object.hasOwn(defaultContent, key) || !Object.hasOwn(content, key))) || typeof value !== 'string' || value.length > 20000) return json(res, 400, { error: 'Only existing website text fields may be changed.' });
+      if ((key !== INLINE_STYLES_KEY && key !== SECTION_ORDER_KEY && (!Object.hasOwn(defaultContent, key) || !Object.hasOwn(content, key))) || typeof value !== 'string' || value.length > 20000) return json(res, 400, { error: 'Only existing website text fields may be changed.' });
     }
     if (body.changes[BLOCK_SETTINGS_KEY] !== undefined && !validBlockSettings(body.changes[BLOCK_SETTINGS_KEY])) return json(res, 400, { error: 'Invalid paragraph visibility or font size.' });
+    if (body.changes[SECTION_ORDER_KEY] !== undefined && !validSectionOrder(body.changes[SECTION_ORDER_KEY])) return json(res, 400, { error: 'Invalid page section order.' });
     const updated = { ...content, ...body.changes };
     if (updated[INLINE_STYLES_KEY] !== undefined && !validInlineStyles(updated[INLINE_STYLES_KEY], updated)) return json(res, 400, { error: 'Invalid selected text formatting. Reload the editor and select the text again.' });
     const saved = await github(cfg, session.token, endpoint, {

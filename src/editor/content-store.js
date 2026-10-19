@@ -1,3 +1,4 @@
+import { withMovedSection } from './section-order';
 import { withEditedText, withInlineStyle } from './inline-styles';
 import { withMovedBlock, withBlockSetting, withDeletedBlocksRestored } from './block-settings';
 import initialContent from '../data/site-content.json';
@@ -31,4 +32,9 @@ export function changeSelectedText(patch) {
   if (state.busy || !state.editing || !state.textSelection?.length) return;
   try { updateState({ content: withInlineStyle(state.content, state.textSelection, patch), message: '' }); }
   catch (error) { updateState({ message: error.message }); }
+}
+
+export function moveSection(group, from, to) {
+  if (state.busy || !state.editing) return;
+  updateState({ content: withMovedSection(state.content, group, from, to), message: '' });
 }

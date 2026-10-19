@@ -1,4 +1,5 @@
-import { useEffect, useSyncExternalStore } from 'react';
+import { nonemptyHeadingLines } from './heading-lines';
+import { Children, Fragment, useEffect, useSyncExternalStore } from 'react';
 import { getSnapshot, moveBlock, subscribe, updateState } from './content-store';
 import { blockStyle, readBlockSettings } from './block-settings';
 
@@ -15,6 +16,10 @@ export default function EditableBlock({ as: Tag = 'p', blockKey, groupKey, child
       updateState({ selectedBlock: blockKey, selectedKind: Tag });
     }
   }
+  const heading = /^h[1-6]$/.test(Tag);
+  const displayChildren = heading && settings.compact
+    ? nonemptyHeadingLines(Children.toArray(children), state.content).map((line, index) => <Fragment key={index}>{index > 0 && <br />}{line}</Fragment>)
+    : children;
   const canDrop = () => state.editing && !state.busy && dragging?.group === groupKey && dragging?.key !== blockKey;
   return (
     <Tag {...props} data-editable-block={blockKey}
@@ -26,6 +31,6 @@ export default function EditableBlock({ as: Tag = 'p', blockKey, groupKey, child
         draggable={!state.busy} disabled={state.busy} aria-label="Drag to reorder within this section" title="Drag to reorder within this section"
         onClick={(event) => { event.preventDefault(); event.stopPropagation(); select(); }}
         onDragStart={(event) => { select(); dragging = { group: groupKey, key: blockKey }; event.dataTransfer.setData('text/plain', blockKey); event.dataTransfer.effectAllowed = 'move'; }}
-        onDragEnd={() => { dragging = null; }}>⠿</button>}{children}</Tag>
+        onDragEnd={() => { dragging = null; }}>⠿</button>}{displayChildren}</Tag>
   );
 }
