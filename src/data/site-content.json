@@ -41,13 +41,13 @@
   "Opportunities.text005": "Students & researchers",
   "Opportunities.text006": "Explore a shared",
   "Opportunities.text007": "research direction.",
-  "Opportunities.text008": "Tell us about your background, the questions you want to investigate, and your experience or interests in environmental science.",
-  "Opportunities.text009": "For inquiries about potential graduate or postdoctoral opportunities, please contact Dr. Huilin Huang directly.",
+  "Opportunities.text008": "Tell us about your background, the questions you want to investigate, and your interests in environmental science.",
+  "Opportunities.text009": "For inquiries about potential graduate or postdoctoral opportunities, please contact Dr. Huilin Huang.",
   "Opportunities.text010": "",
   "Opportunities.text011": "Collaborators",
   "Opportunities.text012": "Connect ideas",
   "Opportunities.text013": "across disciplines.",
-  "Opportunities.text014": "Our research connects fire dynamics, land–atmosphere interactions, and terrestrial biogeochemistry. We welcome conversations about complementary observations, modeling approaches, and environmental questions.",
+  "Opportunities.text014": "Our research connects fire dynamics, terrestrial ecosystem and the atmosphere above it. We welcome conversations about complementary observations, modeling approaches, and environmental questions.",
   "Opportunities.text015": "WILDFIRE",
   "Opportunities.text016": "EARTH SYSTEM SCIENCE",
   "Opportunities.text017": "MACHINE LEARNING",
@@ -152,7 +152,7 @@
   "Layout.text003": "CLIMATE EXTREMES & EARTH SYSTEM LAB",
   "Layout.text004": "Understanding fire. Connecting systems.",
   "Layout.text005": "Informing a more resilient future.",
-  "Layout.text006": "Find us",
+  "Layout.text006": "FIND US",
   "Layout.text007": "Department of Environmental Sciences",
   "Layout.text008": "University of Virginia",
   "Layout.text009": "Charlottesville, Virginia",
@@ -301,5 +301,5 @@
   "courses.0.institution": "",
   "courses.1.institution": "",
   "courses.2.institution": "",
-  "__blockSettings": "{\"Home.Home.text006\":{\"size\":20,\"width\":85},\"Research.Research.text016\":{\"hidden\":true},\"Research.themes.extreme.description\":{\"size\":18},\"Research.themes.extreme.title\":{\"size\":32},\"Research.themes.carbon.title\":{\"size\":32},\"Research.themes.climate.title\":{\"size\":32},\"Research.themes.carbon.description\":{\"size\":18},\"Research.themes.climate.description\":{\"size\":18},\"Research.Research.text004\":{\"width\":100},\"Home.Home.text002\":{\"size\":64},\"Home.themes.extreme.title\":{\"width\":75},\"Home.themes.carbon.title\":{\"width\":85},\"Home.themes.climate.title\":{\"width\":85},\"Home.themes.extreme.short\":{\"size\":20},\"Home.themes.carbon.short\":{\"size\":20},\"Home.themes.climate.short\":{\"size\":20},\"Home.Home.text021\":{\"size\":18,\"width\":25},\"Teaching.Teaching.text002\":{\"size\":64},\"Publications.Publications.text002\":{\"size\":64},\"Ourteam.Ourteam.text002\":{\"size\":64},\"Opportunities.Opportunities.text002\":{\"size\":64},\"Opportunities.Opportunities.text006\":{\"size\":40},\"Opportunities.Opportunities.text004\":{\"width\":100,\"size\":24},\"Opportunities.Opportunities.text012\":{\"size\":40},\"Opportunities.Opportunities.text010\":{\"hidden\":true}}"
+  "__blockSettings": "{\"Home.Home.text006\":{\"size\":20,\"width\":85},\"Research.Research.text016\":{\"hidden\":true},\"Research.themes.extreme.description\":{\"size\":18},\"Research.themes.extreme.title\":{\"size\":32},\"Research.themes.carbon.title\":{\"size\":32},\"Research.themes.climate.title\":{\"size\":32},\"Research.themes.carbon.description\":{\"size\":18},\"Research.themes.climate.description\":{\"size\":18},\"Research.Research.text004\":{\"width\":100},\"Home.Home.text002\":{\"size\":64},\"Home.themes.extreme.title\":{\"width\":75},\"Home.themes.carbon.title\":{\"width\":85},\"Home.themes.climate.title\":{\"width\":85},\"Home.themes.extreme.short\":{\"size\":20},\"Home.themes.carbon.short\":{\"size\":20},\"Home.themes.climate.short\":{\"size\":20},\"Home.Home.text021\":{\"size\":18,\"width\":25},\"Teaching.Teaching.text002\":{\"size\":64},\"Publications.Publications.text002\":{\"size\":64},\"Ourteam.Ourteam.text002\":{\"size\":64},\"Opportunities.Opportunities.text002\":{\"size\":64},\"Opportunities.Opportunities.text006\":{\"size\":40},\"Opportunities.Opportunities.text004\":{\"width\":100,\"size\":24},\"Opportunities.Opportunities.text012\":{\"size\":40},\"Opportunities.Opportunities.text010\":{\"hidden\":true},\"Opportunities.Opportunities.text014\":{\"size\":20},\"Opportunities.Opportunities.text008\":{\"size\":20},\"Opportunities.Opportunities.text009\":{\"size\":20},\"Opportunities.Opportunities.text020\":{\"size\":20}}"
 }
