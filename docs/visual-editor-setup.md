@@ -67,3 +67,11 @@ Highlight words with the mouse or keyboard before choosing Selected color or Ita
 Inline formatting persists as validated character ranges in `__inlineStyles`, and public/preview rendering uses text nodes and style spans. No user-supplied HTML is interpreted. Typing adjusts formatting ranges so later words keep their style. The API accepts the reserved metadata key without requiring a content migration and validates ranges against the final text before committing.
 
 While editing, ordinary link clicks are reserved for editing. Hold Command on Mac or Ctrl on Windows/Linux and click to follow a link using the browser's usual new-tab behavior. This also applies to linked card backgrounds, icons and navigation. Public and Preview mode keep normal link behavior. Links are temporarily disabled during saving.
+
+### Empty lines inside headings
+
+Click a heading and choose Remove empty lines to hide empty text rows and their fixed line breaks. Remaining nonempty rows, text formatting and content are preserved. This applies in editing, Preview and the public page after Save & publish. Restore line breaks (or Reset style) restores the original rows, including their empty editable fields. Delete heading removes the entire heading and is a separate action. This cleanup handles the fixed `<br>` rows used by the existing multi-line headings.
+
+### Whole sections on Our Team
+
+The PI introduction, Students, Experience and service, and Join the team each have a section handle and Move section up / Move section down controls while editing. Drag the section handle onto another section, or use the buttons, to move the entire area with its images, cards and text. For example, moving Students down once places it below Experience and service. Moving it up again returns it directly below the PI introduction. These controls disappear in Preview and on the public site. Save & publish persists the order; Undo changes restores the saved order. Whole-section sorting currently applies to the Our Team page.

@@ -11,7 +11,8 @@ export function validBlockSettings(value) {
     const settings = JSON.parse(value);
     if (!settings || Array.isArray(settings) || typeof settings !== 'object') return false;
     return Object.entries(settings).every(([key, item]) => allowedKeys.has(key) && item && !Array.isArray(item) && typeof item === 'object' &&
-      Object.keys(item).every((name) => ['hidden', 'size', 'color', 'italic', 'width', 'align', 'order'].includes(name)) &&
+      Object.keys(item).every((name) => ['hidden', 'size', 'color', 'italic', 'width', 'align', 'order', 'compact'].includes(name)) &&
+      (item.compact === undefined || typeof item.compact === 'boolean') &&
       (item.hidden === undefined || typeof item.hidden === 'boolean') &&
       (item.size === undefined || FONT_SIZES.includes(item.size)) &&
       (item.color === undefined || (typeof item.color === 'string' && /^#[0-9a-f]{6}$/i.test(item.color))) &&

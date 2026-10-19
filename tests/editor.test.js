@@ -223,3 +223,46 @@ test('editing links require Command or Ctrl; preview and public links retain nor
   const busy = click({ metaKey: true }); guardEditorLink(busy, { editing: true, busy: true }); assert.equal(busy.defaultPrevented, true);
   const rightClick = click({ button: 2 }); guardEditorLink(rightClick, { editing: true }); assert.equal(rightClick.defaultPrevented, false);
 });
+
+test('removing empty heading lines preserves title text, emphasis and intentional nonempty line breaks', async () => {
+  const { nonemptyHeadingLines } = await import('../src/editor/heading-lines.js');
+  const title = { type: 'EditableText', props: { contentKey: 'Ourteam.text002' } };
+  const empty = { type: 'EditableText', props: { contentKey: 'Ourteam.text003' } };
+  const br = { type: 'br', props: {} };
+  const content = { 'Ourteam.text002': 'A path through Earth science.', 'Ourteam.text003': ' \n\u200b ' };
+  assert.deepEqual(nonemptyHeadingLines([title, br, empty], content), [[title]]);
+  assert.deepEqual(nonemptyHeadingLines([br, empty, br, title, br, br], content), [[title]]);
+  const emphasis = { type: 'em', props: { children: [{ type: 'EditableText', props: { contentKey: 'Ourteam.text003' } }] } };
+  const filled = { ...content, 'Ourteam.text003': 'Climate research' };
+  assert.deepEqual(nonemptyHeadingLines([title, br, empty, br, emphasis], filled), [[title], [empty], [emphasis]]);
+  assert.deepEqual(nonemptyHeadingLines([empty, br], { ...content, 'Ourteam.text003': '' }), []);
+  assert.equal(content['Ourteam.text002'], 'A path through Earth science.');
+});
+test('heading cleanup persists, restores original line layout and validates metadata', async () => {
+  const { withBlockSetting, readBlockSettings } = await import('../src/editor/block-settings.js');
+  const key = 'Ourteam.Ourteam.text002';
+  const compact = withBlockSetting(initialContent, key, { compact: true, color: '#112233' });
+  assert.equal(readBlockSettings(JSON.parse(JSON.stringify(compact)))[key].compact, true);
+  const restored = withBlockSetting(compact, key, { compact: null });
+  assert.deepEqual(readBlockSettings(restored)[key], { color: '#112233' });
+  mockGitHub();
+  assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __blockSettings: compact.__blockSettings } } })).statusCode, 200);
+  assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __blockSettings: JSON.stringify({ [key]: { compact: 'true' } }) } } })).statusCode, 400);
+});
+
+test('whole sections can move students below experience or back below the PI without changing content', async () => {
+  const { withMovedSection, sectionOrder } = await import('../src/editor/section-order.js');
+  const moved = withMovedSection(initialContent, 'Ourteam', 'students', 'experience');
+  assert.deepEqual(sectionOrder(JSON.parse(JSON.stringify(moved)), 'Ourteam'), ['profile', 'experience', 'students', 'join']);
+  const restored = withMovedSection(moved, 'Ourteam', 'students', 'experience');
+  assert.deepEqual(sectionOrder(restored, 'Ourteam'), ['profile', 'students', 'experience', 'join']);
+  for (const key of Object.keys(initialContent)) assert.equal(moved[key], initialContent[key]);
+  assert.throws(() => withMovedSection(initialContent, 'Home', 'students', 'profile'));
+  assert.throws(() => withMovedSection(initialContent, 'Ourteam', 'students', 'not-a-section'));
+});
+test('API accepts full section permutations and rejects missing, duplicated or foreign sections', async () => {
+  mockGitHub();
+  const save = (order) => request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __sectionOrder: JSON.stringify(order) } } });
+  assert.equal((await save({ Ourteam: ['profile', 'experience', 'students', 'join'] })).statusCode, 200);
+  for (const order of [{ Ourteam: ['profile'] }, { Ourteam: ['profile', 'students', 'students', 'join'] }, { Ourteam: ['profile', 'students', 'experience', 'unknown'] }, { Unknown: [] }, []]) assert.equal((await save(order)).statusCode, 400);
+});
