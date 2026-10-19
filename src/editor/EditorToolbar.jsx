@@ -1,5 +1,8 @@
+import { guardEditorLink } from './link-behavior';
+import { captureTextSelection } from './text-selection';
+import { readInlineStyles } from './inline-styles';
 import { useEffect, useSyncExternalStore } from 'react';
-import { changeBlock, moveBlock, getSnapshot, pendingChanges, restoreDeletedBlocks, subscribe, updateState } from './content-store';
+import { changeBlock, changeSelectedText, moveBlock, getSnapshot, pendingChanges, restoreDeletedBlocks, subscribe, updateState } from './content-store';
 import { FONT_SIZES, groupForBlock, orderedGroup, readBlockSettings } from './block-settings';
 import './editor.css';
 
@@ -38,7 +41,25 @@ export default function EditorToolbar() {
   const visible = orderedGroup(state.content, group).filter((key) => !blocks[key]?.hidden);
   const position = visible.indexOf(state.selectedBlock);
   const disabled = state.busy || !state.selectedBlock;
+  const hasSelection = !!state.textSelection?.length;
+  const firstSelection = state.textSelection?.[0];
+  const inline = readInlineStyles(state.content);
+  const firstStyle = firstSelection ? (inline[firstSelection.key] || []).find((run) => run.start <= firstSelection.start && run.end > firstSelection.start) || {} : {};
+  const colorDisabled = state.busy || !hasSelection;
   const kind = state.selectedKind === 'p' ? 'paragraph' : 'heading';
+  useEffect(() => {
+    const guard = (event) => guardEditorLink(event, getSnapshot());
+    document.addEventListener('click', guard, true);
+    document.addEventListener('auxclick', guard, true);
+    return () => {
+      document.removeEventListener('click', guard, true);
+      document.removeEventListener('auxclick', guard, true);
+    };
+  }, []);
+  useEffect(() => {
+    document.addEventListener('selectionchange', captureTextSelection);
+    return () => document.removeEventListener('selectionchange', captureTextSelection);
+  }, []);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('editor_error')) {
@@ -84,19 +105,21 @@ export default function EditorToolbar() {
     </div>
   );
   return (
-    <aside className="editor-toolbar" aria-label="Website editor">
-      <div><strong>{state.editing ? 'Click any outlined text to edit' : 'Preview your changes'}</strong><small>{dirty ? `${dirty} unsaved change${dirty === 1 ? '' : 's'}` : 'All changes saved'}</small></div>
+    <aside className="editor-toolbar" aria-label="Website editor" onPointerDownCapture={captureTextSelection}>
+      <div><strong>{state.editing ? 'Click text to edit · ⌘/Ctrl + click to open links' : 'Preview your changes'}</strong><small>{dirty ? `${dirty} unsaved change${dirty === 1 ? '' : 's'}` : 'All changes saved'}</small></div>
       {state.editing && <>
+        <p className="editor-selection-scope">{hasSelection ? `Color / Italic: selected text only (${state.textSelection.reduce((n, range) => n + range.end - range.start, 0)} characters)` : 'Highlight words to change their color or italic style.'}</p>
         <label className="editor-font-size">Font size
           <select aria-label="Selected paragraph or heading font size" disabled={state.busy || !state.selectedBlock} value={selected.size || 'default'} onChange={(event) => changeBlock({ size: event.target.value === 'default' ? null : Number(event.target.value) })}>
             <option value="default">Default</option>
             {FONT_SIZES.map((size) => <option key={size} value={size}>{size}px</option>)}
           </select>
         </label>
-        <label className="editor-font-size">Color
-          <input type="color" aria-label="Text color" disabled={disabled} value={selected.color || '#263e32'} onChange={(event) => changeBlock({ color: event.target.value })} />
+        <label className="editor-font-size">Selected color
+          <input type="color" aria-label="Selected text color" disabled={colorDisabled} value={firstStyle.color || selected.color || '#263e32'} onChange={(event) => changeSelectedText({ color: event.target.value })} />
         </label>
-        <button type="button" disabled={disabled} aria-pressed={selected.italic === true} onClick={() => changeBlock({ italic: !selected.italic })}><i>Italic</i></button>
+        <button type="button" disabled={colorDisabled} aria-pressed={firstStyle.italic === true} onMouseDown={(event) => event.preventDefault()} onClick={() => changeSelectedText({ italic: !firstStyle.italic })}><i>Italic</i></button>
+        <button type="button" disabled={colorDisabled} onMouseDown={(event) => event.preventDefault()} onClick={() => changeSelectedText({ color: null, italic: null })}>Clear selected style</button>
         <label className="editor-font-size">Width
           <select aria-label="Block width" disabled={disabled} value={selected.width || 'default'} onChange={(event) => changeBlock({ width: event.target.value === 'default' ? null : Number(event.target.value) })}>
             <option value="default">Default</option>
@@ -114,8 +137,8 @@ export default function EditorToolbar() {
         <button className="editor-delete" type="button" disabled={state.busy || !state.selectedBlock} onClick={() => changeBlock({ hidden: true })}>Delete {kind}</button>
       </>}
       {hiddenCount > 0 && <button type="button" disabled={state.busy} onClick={restoreDeletedBlocks}>Restore deleted ({hiddenCount})</button>}
-      <button type="button" disabled={state.busy} onClick={() => updateState({ editing: !state.editing })}>{state.editing ? 'Preview' : 'Continue editing'}</button>
-      <button type="button" disabled={state.busy || !dirty} onClick={() => { if (window.confirm('Discard all unsaved changes?')) updateState({ content: state.baseline, selectedBlock: null, message: '' }); }}>Undo changes</button>
+      <button type="button" disabled={state.busy} onClick={() => updateState({ editing: !state.editing, textSelection: [] })}>{state.editing ? 'Preview' : 'Continue editing'}</button>
+      <button type="button" disabled={state.busy || !dirty} onClick={() => { if (window.confirm('Discard all unsaved changes?')) updateState({ content: state.baseline, selectedBlock: null, textSelection: [], message: '' }); }}>Undo changes</button>
       <button className="editor-publish" type="button" disabled={state.busy || !dirty} onClick={publish}>{state.busy ? 'Saving…' : 'Save & publish'}</button>
       <button type="button" disabled={state.busy} onClick={exit}>Exit</button>
       {state.message && <p role="status">{state.message}</p>}

@@ -59,3 +59,11 @@ If `/research` works only when reached from Home, `vercel.json` also supplies th
 Click a paragraph or heading, then use Color, Italic, Width and Align in the editor toolbar. These settings apply to the whole selected paragraph or heading. Reset style restores its original appearance; it does not restore deleted paragraphs or reset ordering. All controls participate in Preview, Undo changes, and Save & publish.
 
 Adjacent headings and paragraphs in a content section have a small ⠿ handle while editing. Drag the handle onto another paragraph in the same section to move it to that position. Move up / Move down offer the same operation for keyboard and touch users. Moving across sections, photos or cards is not supported. Deleted blocks can be restored with their style and order retained. The handles disappear in Preview and on the public site.
+
+### Selected-word formatting
+
+Highlight words with the mouse or keyboard before choosing Selected color or Italic. The toolbar reports “selected text only” and the number of selected characters; these controls are disabled with no highlighted text. Selection is retained while interacting with the color picker. A selection may span multiple editable text fields. Clear selected style removes only the highlighted words' color and italic overrides. Reset style remains a whole-paragraph/heading control for the older block styles, width, alignment and font size; use it to undo an earlier whole-heading color change.
+
+Inline formatting persists as validated character ranges in `__inlineStyles`, and public/preview rendering uses text nodes and style spans. No user-supplied HTML is interpreted. Typing adjusts formatting ranges so later words keep their style. The API accepts the reserved metadata key without requiring a content migration and validates ranges against the final text before committing.
+
+While editing, ordinary link clicks are reserved for editing. Hold Command on Mac or Ctrl on Windows/Linux and click to follow a link using the browser's usual new-tab behavior. This also applies to linked card backgrounds, icons and navigation. Public and Preview mode keep normal link behavior. Links are temporarily disabled during saving.
