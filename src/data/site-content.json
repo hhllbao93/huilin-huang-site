@@ -2,8 +2,8 @@
   "Research.text001": "Research / Connecting scales & systems",
   "Research.text002": "Understanding extremes.",
   "Research.text003": "Connecting Earth systems.",
-  "Research.text004": "We study how climate extremes interact with terrestrial ecosystems and the atmosphere. We integrate observations, process-based modeling, and machine learning to understand the underlying mechanisms, feedbacks, and predictability of these interconnected processes.",
-  "Research.text005": "Our approach",
+  "Research.text004": "We study how climate extremes interact with terrestrial ecosystems and the atmosphere.",
+  "Research.text005": "OUR APPROACH",
   "Research.text006": "Observe the Earth surface.",
   "Research.text007": "Understand the process.",
   "Research.text008": "Model the future",
@@ -301,5 +301,5 @@
   "courses.0.institution": "",
   "courses.1.institution": "",
   "courses.2.institution": "",
-  "__blockSettings": "{\"Home.Home.text006\":{\"size\":18},\"Research.Research.text016\":{\"hidden\":true},\"Research.themes.extreme.description\":{\"size\":18},\"Research.themes.extreme.title\":{\"size\":32},\"Research.themes.carbon.title\":{\"size\":32},\"Research.themes.climate.title\":{\"size\":32},\"Research.themes.carbon.description\":{\"size\":18},\"Research.themes.climate.description\":{\"size\":18}}"
+  "__blockSettings": "{\"Home.Home.text006\":{\"size\":18},\"Research.Research.text016\":{\"hidden\":true},\"Research.themes.extreme.description\":{\"size\":18},\"Research.themes.extreme.title\":{\"size\":32},\"Research.themes.carbon.title\":{\"size\":32},\"Research.themes.climate.title\":{\"size\":32},\"Research.themes.carbon.description\":{\"size\":18},\"Research.themes.climate.description\":{\"size\":18},\"Research.Research.text004\":{\"width\":100}}"
 }
