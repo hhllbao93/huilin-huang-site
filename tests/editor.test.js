@@ -145,3 +145,63 @@ test('layout manifest uses real, unique blocks and every group supports independ
     for (const key of keys) { assert.ok(blocks.includes(key)); assert.ok(!seen.has(key)); seen.add(key); }
   }
 });
+
+test('selected-word color and italic leave surrounding words and block style unchanged', async () => {
+  const { withInlineStyle, readInlineStyles, textSegments } = await import('../src/editor/inline-styles.js');
+  const key = 'Home.text002'; const content = { ...initialContent, [key]: 'Understanding a changing climate' };
+  const selected = [{ key, start: 16, end: 24 }];
+  const colored = withInlineStyle(content, selected, { color: '#aa2244' });
+  const italic = withInlineStyle(colored, selected, { italic: true });
+  assert.equal(italic[key], content[key]); assert.equal(italic.__blockSettings, content.__blockSettings);
+  assert.deepEqual(textSegments(italic[key], readInlineStyles(italic)[key]), [
+    { text: 'Understanding a ' }, { text: 'changing', color: '#aa2244', italic: true }, { text: ' climate' },
+  ]);
+  assert.deepEqual(readInlineStyles(JSON.parse(JSON.stringify(italic))), readInlineStyles(italic));
+});
+test('overlapping selections retain other styles and clear only the selected characters', async () => {
+  const { withInlineStyle, readInlineStyles } = await import('../src/editor/inline-styles.js');
+  const key = 'Home.text002'; const content = { ...initialContent, [key]: 'abcdefghij' };
+  const colored = withInlineStyle(content, [{ key, start: 1, end: 8 }], { color: '#123456' });
+  const italic = withInlineStyle(colored, [{ key, start: 3, end: 10 }], { italic: true });
+  const cleared = withInlineStyle(italic, [{ key, start: 4, end: 6 }], { color: null, italic: null });
+  assert.deepEqual(readInlineStyles(cleared)[key], [
+    { start: 1, end: 3, color: '#123456' }, { start: 3, end: 4, color: '#123456', italic: true },
+    { start: 6, end: 8, color: '#123456', italic: true }, { start: 8, end: 10, italic: true },
+  ]);
+});
+test('formatting spans multiple text fields and safely tracks insertion, replacement and deletion', async () => {
+  const { withInlineStyle, withEditedText, readInlineStyles, validInlineStyles } = await import('../src/editor/inline-styles.js');
+  const key = 'Home.text002'; const second = 'Home.text003';
+  let content = { ...initialContent, [key]: 'abc def ghi', [second]: 'climate' };
+  content = withInlineStyle(content, [{ key, start: 4, end: 7 }, { key: second, start: 0, end: 7 }], { color: '#abcdef' });
+  content = withEditedText(content, key, 'XX abc def ghi');
+  assert.deepEqual(readInlineStyles(content)[key], [{ start: 7, end: 10, color: '#abcdef' }]);
+  content = withEditedText(content, key, 'XX abc dYf ghi');
+  assert.deepEqual(readInlineStyles(content)[key], [{ start: 7, end: 10, color: '#abcdef' }]);
+  content = withEditedText(content, key, 'XX abc  ghi');
+  assert.equal(readInlineStyles(content)[key], undefined);
+  assert.equal(readInlineStyles(content)[second][0].color, '#abcdef');
+  assert.ok(validInlineStyles(content.__inlineStyles, content));
+});
+test('API saves inline styles without a migration and rejects HTML, unknown keys and invalid ranges', async () => {
+  const key = 'Home.text002'; const calls = mockGitHub();
+  const styles = JSON.stringify({ [key]: [{ start: 0, end: 2, color: '#112233', italic: true }] });
+  const result = await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __inlineStyles: styles } } });
+  assert.equal(result.statusCode, 200);
+  const write = calls.find((c) => c.options.method === 'PUT');
+  const saved = JSON.parse(Buffer.from(JSON.parse(write.options.body).content, 'base64'));
+  assert.equal(saved.__inlineStyles, styles);
+  const invalid = [
+    { unknown: [{ start: 0, end: 1, color: '#112233' }] },
+    { [key]: [{ start: -1, end: 1, italic: true }] },
+    { [key]: [{ start: 0, end: initialContent[key].length + 1, italic: true }] },
+    { [key]: [{ start: 0, end: 1, color: '<script>' }] },
+    { [key]: [{ start: 0, end: 1, style: 'position:fixed' }] },
+    { [key]: [{ start: 0, end: 2, italic: true }, { start: 1, end: 3, italic: false }] },
+    { [key]: [{ start: 0, end: 1, italic: 'true' }] },
+    [],
+  ];
+  for (const value of invalid) assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __inlineStyles: JSON.stringify(value) } } })).statusCode, 400);
+  // A text update that invalidates previously valid ranges must not be published.
+  assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __inlineStyles: styles, [key]: '' } } })).statusCode, 400);
+});

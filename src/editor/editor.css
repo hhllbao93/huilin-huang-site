@@ -28,3 +28,5 @@ body:has(.editor-toolbar) { padding-bottom: 160px; }
 .editor-toolbar button[aria-pressed="true"] { background: #dce8df; border-color: #263e32; }
 body:has(.editor-toolbar) { padding-bottom: min(44vh, 360px); }
 @media (max-width: 600px) { .editor-toolbar { gap: .4rem; padding: 10px; bottom: 6px; } .editor-toolbar button { padding: .45rem .65rem; } .editor-drag-handle { left: -18px; width: 17px; } }
+
+.editor-selection-scope { font-size: 12px; color: #34513e; background: #e8f0e9; padding: 6px 8px; border-radius: 5px; }
