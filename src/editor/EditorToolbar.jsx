@@ -1,3 +1,4 @@
+import { guardEditorLink } from './link-behavior';
 import { captureTextSelection } from './text-selection';
 import { readInlineStyles } from './inline-styles';
 import { useEffect, useSyncExternalStore } from 'react';
@@ -46,6 +47,15 @@ export default function EditorToolbar() {
   const firstStyle = firstSelection ? (inline[firstSelection.key] || []).find((run) => run.start <= firstSelection.start && run.end > firstSelection.start) || {} : {};
   const colorDisabled = state.busy || !hasSelection;
   const kind = state.selectedKind === 'p' ? 'paragraph' : 'heading';
+  useEffect(() => {
+    const guard = (event) => guardEditorLink(event, getSnapshot());
+    document.addEventListener('click', guard, true);
+    document.addEventListener('auxclick', guard, true);
+    return () => {
+      document.removeEventListener('click', guard, true);
+      document.removeEventListener('auxclick', guard, true);
+    };
+  }, []);
   useEffect(() => {
     document.addEventListener('selectionchange', captureTextSelection);
     return () => document.removeEventListener('selectionchange', captureTextSelection);
@@ -96,7 +106,7 @@ export default function EditorToolbar() {
   );
   return (
     <aside className="editor-toolbar" aria-label="Website editor" onPointerDownCapture={captureTextSelection}>
-      <div><strong>{state.editing ? 'Click any outlined text to edit' : 'Preview your changes'}</strong><small>{dirty ? `${dirty} unsaved change${dirty === 1 ? '' : 's'}` : 'All changes saved'}</small></div>
+      <div><strong>{state.editing ? 'Click text to edit · ⌘/Ctrl + click to open links' : 'Preview your changes'}</strong><small>{dirty ? `${dirty} unsaved change${dirty === 1 ? '' : 's'}` : 'All changes saved'}</small></div>
       {state.editing && <>
         <p className="editor-selection-scope">{hasSelection ? `Color / Italic: selected text only (${state.textSelection.reduce((n, range) => n + range.end - range.start, 0)} characters)` : 'Highlight words to change their color or italic style.'}</p>
         <label className="editor-font-size">Font size

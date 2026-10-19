@@ -1,3 +1,4 @@
+import { isLinkShortcut } from './link-behavior';
 import { useEffect, useLayoutEffect, useRef, useSyncExternalStore } from 'react';
 import { inlineStyle, readInlineStyles, textSegments } from './inline-styles';
 import { captureTextSelection, fieldSelection, restoreFieldSelection } from './text-selection';
@@ -46,7 +47,7 @@ export default function EditableText({ contentKey, children }) {
       onFocus={(event) => {
         if (!event.currentTarget.closest('[data-editable-block]')) updateState({ selectedBlock: null });
       }}
-      onClick={(event) => { event.preventDefault(); event.stopPropagation(); }}
+      onClick={(event) => { if (!isLinkShortcut(event)) { event.preventDefault(); event.stopPropagation(); } }}
       onKeyDown={(event) => {
         event.stopPropagation();
         if (event.key === 'Escape') event.currentTarget.blur();

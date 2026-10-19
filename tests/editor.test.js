@@ -205,3 +205,21 @@ test('API saves inline styles without a migration and rejects HTML, unknown keys
   // A text update that invalidates previously valid ranges must not be published.
   assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __inlineStyles: styles, [key]: '' } } })).statusCode, 400);
 });
+
+test('editing links require Command or Ctrl; preview and public links retain normal behavior', async () => {
+  const { guardEditorLink, isLinkShortcut } = await import('../src/editor/link-behavior.js');
+  function click({ metaKey = false, ctrlKey = false, button = 0, link = true } = {}) {
+    const anchor = { href: '/research' };
+    return { metaKey, ctrlKey, button, target: { closest: () => link ? anchor : null }, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };
+  }
+  for (const button of [0, 1]) {
+    const plain = click({ button }); guardEditorLink(plain, { editing: true }); assert.equal(plain.defaultPrevented, true);
+  }
+  for (const options of [{ metaKey: true }, { ctrlKey: true }]) {
+    const modified = click(options); guardEditorLink(modified, { editing: true }); assert.equal(modified.defaultPrevented, false); assert.equal(isLinkShortcut(modified), true);
+  }
+  const preview = click(); guardEditorLink(preview, { editing: false }); assert.equal(preview.defaultPrevented, false);
+  const text = click({ link: false }); guardEditorLink(text, { editing: true }); assert.equal(text.defaultPrevented, false);
+  const busy = click({ metaKey: true }); guardEditorLink(busy, { editing: true, busy: true }); assert.equal(busy.defaultPrevented, true);
+  const rightClick = click({ button: 2 }); guardEditorLink(rightClick, { editing: true }); assert.equal(rightClick.defaultPrevented, false);
+});
