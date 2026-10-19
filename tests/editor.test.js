@@ -266,3 +266,19 @@ test('API accepts full section permutations and rejects missing, duplicated or f
   assert.equal((await save({ Ourteam: ['profile', 'experience', 'students', 'join'] })).statusCode, 200);
   for (const order of [{ Ourteam: ['profile'] }, { Ourteam: ['profile', 'students', 'students', 'join'] }, { Ourteam: ['profile', 'students', 'experience', 'unknown'] }, { Unknown: [] }, []]) assert.equal((await save(order)).statusCode, 400);
 });
+
+test('service list item font size persists independently and supports deletion and restoration', async () => {
+  const { withBlockSetting, readBlockSettings, blockStyle, withDeletedBlocksRestored } = await import('../src/editor/block-settings.js');
+  const keys = ['Ourteam.Ourteam.text028', 'Ourteam.Ourteam.text031', 'Ourteam.Ourteam.text034', 'Ourteam.Ourteam.text035', 'Ourteam.Ourteam.text036'];
+  let content = initialContent;
+  for (const key of keys) content = withBlockSetting(content, key, { size: 24 });
+  const selected = keys[2];
+  content = withBlockSetting(content, selected, { size: 18, hidden: true });
+  const restored = withDeletedBlocksRestored(JSON.parse(JSON.stringify(content)));
+  assert.equal(readBlockSettings(restored)[selected].size, 18);
+  assert.match(blockStyle(readBlockSettings(restored)[selected]).fontSize, /18px/);
+  assert.equal(readBlockSettings(restored)[keys[0]].size, 24);
+  assert.equal(restored['Ourteam.text034'], initialContent['Ourteam.text034']);
+  mockGitHub();
+  assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __blockSettings: restored.__blockSettings } } })).statusCode, 200);
+});
