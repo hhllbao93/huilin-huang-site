@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useSyncExternalStore } from 'react';
-import { changeText, getSnapshot, subscribe } from './content-store';
+import { changeText, getSnapshot, subscribe, updateState } from './content-store';
 
 export default function EditableText({ contentKey, children }) {
   const state = useSyncExternalStore(subscribe, getSnapshot);
@@ -21,6 +21,9 @@ export default function EditableText({ contentKey, children }) {
       aria-label="Edit this text"
       aria-multiline="true"
       tabIndex={0}
+      onFocus={(event) => {
+        if (!event.currentTarget.closest('[data-editable-block]')) updateState({ selectedBlock: null });
+      }}
       onClick={(event) => { event.preventDefault(); event.stopPropagation(); }}
       onKeyDown={(event) => {
         event.stopPropagation();

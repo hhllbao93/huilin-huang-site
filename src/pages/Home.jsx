@@ -1,3 +1,4 @@
+import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
@@ -13,10 +14,10 @@ export default function Home() {
         <div className="hero-copy">
           <span className="eyebrow">
             <span className="status-dot" /><EditableText contentKey="Home.text001" /></span>
-          <h1><EditableText contentKey="Home.text002" /><br /><EditableText contentKey="Home.text003" /><br /><EditableText contentKey="Home.text004" /><em><EditableText contentKey="Home.text005" /></em>.
+          <EditableBlock as="h1" blockKey="Home.Home.text002"><EditableText contentKey="Home.text002" /><br /><EditableText contentKey="Home.text003" /><br /><EditableText contentKey="Home.text004" /><em><EditableText contentKey="Home.text005" /></em>.
             <br />
-          </h1>
-          <p><EditableText contentKey="Home.text006" /></p>
+          </EditableBlock>
+          <EditableBlock as="p" blockKey="Home.Home.text006"><EditableText contentKey="Home.text006" /></EditableBlock>
           <Link to="/research" className="button"><EditableText contentKey="Home.text007" /><FiArrowUpRight />
           </Link>
           <div className="hero-footnote">
@@ -36,7 +37,7 @@ export default function Home() {
           </div>
           <div className="image-caption">
             <span className="image-caption-line" />
-            <p><EditableText contentKey="Home.text011" /><br /><EditableText contentKey="Home.text012" /></p>
+            <EditableBlock as="p" blockKey="Home.Home.text011"><EditableText contentKey="Home.text011" /><br /><EditableText contentKey="Home.text012" /></EditableBlock>
             <span><EditableText contentKey="Home.text013" /></span>
           </div>
         </div>
@@ -59,9 +60,9 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <span className="eyebrow"><EditableText contentKey="Home.text018" /></span>
-            <h2><EditableText contentKey="Home.text019" /><br /><EditableText contentKey="Home.text020" /></h2>
+            <EditableBlock as="h2" blockKey="Home.Home.text019"><EditableText contentKey="Home.text019" /><br /><EditableText contentKey="Home.text020" /></EditableBlock>
           </div>
-          <p><EditableText contentKey="Home.text021" /></p>
+          <EditableBlock as="p" blockKey="Home.Home.text021"><EditableText contentKey="Home.text021" /></EditableBlock>
         </div>
         <div className="theme-grid">
           {themes.map((theme, index) => (
@@ -74,8 +75,8 @@ export default function Home() {
                 <span>0{index + 1}</span>
                 <FiArrowUpRight />
               </div>
-              <h3>{<EditableText contentKey={`themes.${theme.id}.title`}>{theme.title}</EditableText>}</h3>
-              <p>{<EditableText contentKey={`themes.${theme.id}.short`}>{theme.short}</EditableText>}</p>
+              <EditableBlock as="h3" blockKey={`Home.themes.${theme.id}.title`}>{<EditableText contentKey={`themes.${theme.id}.title`}>{theme.title}</EditableText>}</EditableBlock>
+              <EditableBlock as="p" blockKey={`Home.themes.${theme.id}.short`}>{<EditableText contentKey={`themes.${theme.id}.short`}>{theme.short}</EditableText>}</EditableBlock>
               <span className="theme-bottom"><EditableText contentKey="Home.text022" /><FiArrowRight />
               </span>
             </Link>
@@ -90,13 +91,13 @@ export default function Home() {
           </div>
           <div className="profile-copy">
             <span className="eyebrow"><EditableText contentKey="Home.text024" /></span>
-            <h2><EditableText contentKey="Home.text025" /><br /><EditableText contentKey="Home.text026" /></h2>
-            <p className="profile-role">
+            <EditableBlock as="h2" blockKey="Home.Home.text025"><EditableText contentKey="Home.text025" /><br /><EditableText contentKey="Home.text026" /></EditableBlock>
+            <EditableBlock as="p" blockKey="Home.Home.text027" className="profile-role">
               Dr. Huilin Huang{" "}
               <span><EditableText contentKey="Home.text027" /></span>
-            </p>
-            <p><EditableText contentKey="Home.text028" /></p>
-            <p><EditableText contentKey="Home.text029" /></p>
+            </EditableBlock>
+            <EditableBlock as="p" blockKey="Home.Home.text028"><EditableText contentKey="Home.text028" /></EditableBlock>
+            <EditableBlock as="p" blockKey="Home.Home.text029"><EditableText contentKey="Home.text029" /></EditableBlock>
             <div className="profile-actions">
               <Link className="text-link" to="/ourteam"><EditableText contentKey="Home.text030" /><FiArrowUpRight />
               </Link>
@@ -114,7 +115,7 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <span className="eyebrow"><EditableText contentKey="Home.text032" /></span>
-            <h2><EditableText contentKey="Home.text033" /></h2>
+            <EditableBlock as="h2" blockKey="Home.Home.text033"><EditableText contentKey="Home.text033" /></EditableBlock>
           </div>
           <Link className="text-link" to="/publications"><EditableText contentKey="Home.text034" /><FiArrowUpRight />
           </Link>
@@ -122,20 +123,20 @@ export default function Home() {
         <Link to="/publications?q=canopy" className="featured-paper">
           <span className="paper-meta"><EditableText contentKey="Home.text035" /><span>2025</span>
           </span>
-          <h3><EditableText contentKey="Home.text036" /></h3>
+          <EditableBlock as="h3" blockKey="Home.Home.text036"><EditableText contentKey="Home.text036" /></EditableBlock>
           <FiArrowUpRight aria-hidden="true" />
         </Link>
         <Link to="/publications?q=ML4Fire" className="featured-paper">
           <span className="paper-meta"><EditableText contentKey="Home.text037" /><span>2025</span>
           </span>
-          <h3><EditableText contentKey="Home.text038" /></h3>
+          <EditableBlock as="h3" blockKey="Home.Home.text038"><EditableText contentKey="Home.text038" /></EditableBlock>
           <FiArrowUpRight aria-hidden="true" />
         </Link>
         <div className="join-band">
           <div>
             <span className="eyebrow"><EditableText contentKey="Home.text039" /></span>
-            <h2><EditableText contentKey="Home.text040" /></h2>
-            <p><EditableText contentKey="Home.text041" /></p>
+            <EditableBlock as="h2" blockKey="Home.Home.text040"><EditableText contentKey="Home.text040" /></EditableBlock>
+            <EditableBlock as="p" blockKey="Home.Home.text041"><EditableText contentKey="Home.text041" /></EditableBlock>
           </div>
           <Link className="button" to="/opportunities"><EditableText contentKey="Home.text042" /><FiArrowUpRight />
           </Link>

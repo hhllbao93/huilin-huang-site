@@ -71,3 +71,35 @@ test('OAuth login uses expiring secure state, PKCE and canonical callback',async
 test('OAuth callback without matching state cannot create a session',async()=>{
   const calls=mockGitHub();const r=await request('callback',{authenticated:false});assert.equal(r.statusCode,302);assert.equal(r.location,'/?editor_error=signin');assert.equal(calls.length,0);
 });
+
+test('paragraph deletion and font size are persistent settings without erasing text', async () => {
+  const { readBlockSettings, withBlockSetting, withDeletedBlocksRestored } = await import('../src/editor/block-settings.js');
+  const key = 'Research.Research.text004';
+  const sized = withBlockSetting(initialContent, key, { size: 24 });
+  const hidden = withBlockSetting(sized, key, { hidden: true });
+  assert.deepEqual(readBlockSettings(hidden)[key], { size: 24, hidden: true });
+  assert.equal(hidden['Research.text004'], initialContent['Research.text004']);
+  const restored = withDeletedBlocksRestored(hidden);
+  assert.deepEqual(readBlockSettings(restored)[key], { size: 24 });
+  const reset = withBlockSetting(restored, key, { size: null });
+  assert.equal(reset.__blockSettings, '{}');
+  assert.equal(initialContent.__blockSettings, '{}');
+});
+test('save accepts known paragraph settings and rejects unknown blocks or arbitrary styles', async () => {
+  const calls = mockGitHub();
+  const settings = JSON.stringify({ 'Research.Research.text004': { hidden: true, size: 24 } });
+  const saved = await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __blockSettings: settings } } });
+  assert.equal(saved.statusCode, 200);
+  const write = calls.find((call) => call.options.method === 'PUT');
+  const content = JSON.parse(Buffer.from(JSON.parse(write.options.body).content, 'base64'));
+  assert.equal(content.__blockSettings, settings);
+  for (const invalid of [
+    { 'not-a-real-block': { hidden: true } },
+    { 'Research.Research.text004': { size: 9999 } },
+    { 'Research.Research.text004': { style: 'position:fixed' } },
+    { 'Research.Research.text004': { hidden: 'true' } },
+    [],
+  ]) {
+    assert.equal((await request('save', { method: 'POST', body: { sha: 'current-sha', changes: { __blockSettings: JSON.stringify(invalid) } } })).statusCode, 400);
+  }
+});

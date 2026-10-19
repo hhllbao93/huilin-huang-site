@@ -1,3 +1,4 @@
+import { BLOCK_SETTINGS_KEY, validBlockSettings } from '../src/editor/block-settings.js';
 import { createCipheriv, createDecipheriv, createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import defaultContent from '../src/data/site-content.json' with { type: 'json' };
 
@@ -111,6 +112,7 @@ export default async function handler(req, res) {
     for (const [key, value] of Object.entries(body.changes)) {
       if (!Object.hasOwn(defaultContent, key) || !Object.hasOwn(content, key) || typeof value !== 'string' || value.length > 20000) return json(res, 400, { error: 'Only existing website text fields may be changed.' });
     }
+    if (body.changes[BLOCK_SETTINGS_KEY] !== undefined && !validBlockSettings(body.changes[BLOCK_SETTINGS_KEY])) return json(res, 400, { error: 'Invalid paragraph visibility or font size.' });
     const updated = { ...content, ...body.changes };
     const saved = await github(cfg, session.token, endpoint, {
       method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ branch: cfg.branch, sha: current.sha, message: 'Update website text with visual editor', content: Buffer.from(JSON.stringify(updated, null, 2) + '\n').toString('base64') }),
