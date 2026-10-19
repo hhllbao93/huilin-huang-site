@@ -1,3 +1,4 @@
+import EditableGroup from "../editor/EditableGroup";
 import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
 import { Link } from "react-router-dom";
@@ -14,10 +15,12 @@ export default function Home() {
         <div className="hero-copy">
           <span className="eyebrow">
             <span className="status-dot" /><EditableText contentKey="Home.text001" /></span>
-          <EditableBlock as="h1" blockKey="Home.Home.text002"><EditableText contentKey="Home.text002" /><br /><EditableText contentKey="Home.text003" /><br /><EditableText contentKey="Home.text004" /><em><EditableText contentKey="Home.text005" /></em>.
+          <EditableGroup groupKey="Home.group16">
+<EditableBlock as="h1" blockKey="Home.Home.text002"><EditableText contentKey="Home.text002" /><br /><EditableText contentKey="Home.text003" /><br /><EditableText contentKey="Home.text004" /><em><EditableText contentKey="Home.text005" /></em>.
             <br />
           </EditableBlock>
           <EditableBlock as="p" blockKey="Home.Home.text006"><EditableText contentKey="Home.text006" /></EditableBlock>
+</EditableGroup>
           <Link to="/research" className="button"><EditableText contentKey="Home.text007" /><FiArrowUpRight />
           </Link>
           <div className="hero-footnote">
@@ -91,13 +94,15 @@ export default function Home() {
           </div>
           <div className="profile-copy">
             <span className="eyebrow"><EditableText contentKey="Home.text024" /></span>
-            <EditableBlock as="h2" blockKey="Home.Home.text025"><EditableText contentKey="Home.text025" /><br /><EditableText contentKey="Home.text026" /></EditableBlock>
+            <EditableGroup groupKey="Home.group17">
+<EditableBlock as="h2" blockKey="Home.Home.text025"><EditableText contentKey="Home.text025" /><br /><EditableText contentKey="Home.text026" /></EditableBlock>
             <EditableBlock as="p" blockKey="Home.Home.text027" className="profile-role">
               Dr. Huilin Huang{" "}
               <span><EditableText contentKey="Home.text027" /></span>
             </EditableBlock>
             <EditableBlock as="p" blockKey="Home.Home.text028"><EditableText contentKey="Home.text028" /></EditableBlock>
             <EditableBlock as="p" blockKey="Home.Home.text029"><EditableText contentKey="Home.text029" /></EditableBlock>
+</EditableGroup>
             <div className="profile-actions">
               <Link className="text-link" to="/ourteam"><EditableText contentKey="Home.text030" /><FiArrowUpRight />
               </Link>
@@ -135,8 +140,10 @@ export default function Home() {
         <div className="join-band">
           <div>
             <span className="eyebrow"><EditableText contentKey="Home.text039" /></span>
-            <EditableBlock as="h2" blockKey="Home.Home.text040"><EditableText contentKey="Home.text040" /></EditableBlock>
+            <EditableGroup groupKey="Home.group18">
+<EditableBlock as="h2" blockKey="Home.Home.text040"><EditableText contentKey="Home.text040" /></EditableBlock>
             <EditableBlock as="p" blockKey="Home.Home.text041"><EditableText contentKey="Home.text041" /></EditableBlock>
+</EditableGroup>
           </div>
           <Link className="button" to="/opportunities"><EditableText contentKey="Home.text042" /><FiArrowUpRight />
           </Link>

@@ -1,0 +1,87 @@
+{
+  "Research.group1": [
+    "Research.Research.text002",
+    "Research.Research.text004"
+  ],
+  "Research.group2": [
+    "Research.Research.text015",
+    "Research.Research.text016"
+  ],
+  "Research.group3": [
+    "Research.Research.text017",
+    "Research.Research.text018"
+  ],
+  "Research.group4": [
+    "Research.Research.text019",
+    "Research.Research.text020"
+  ],
+  "Research.group5": [
+    "Research.Research.text022",
+    "Research.Research.text023"
+  ],
+  "Teaching.group6": [
+    "Teaching.Teaching.text002",
+    "Teaching.Teaching.text004"
+  ],
+  "Teaching.group7": [
+    "Teaching.Teaching.text008",
+    "Teaching.Teaching.text010"
+  ],
+  "Opportunities.group8": [
+    "Opportunities.Opportunities.text002",
+    "Opportunities.Opportunities.text004"
+  ],
+  "Opportunities.group9": [
+    "Opportunities.Opportunities.text006",
+    "Opportunities.Opportunities.text008",
+    "Opportunities.Opportunities.text009",
+    "Opportunities.Opportunities.text010"
+  ],
+  "Opportunities.group10": [
+    "Opportunities.Opportunities.text012",
+    "Opportunities.Opportunities.text014"
+  ],
+  "Opportunities.group11": [
+    "Opportunities.Opportunities.text019",
+    "Opportunities.Opportunities.text020"
+  ],
+  "Ourteam.group12": [
+    "Ourteam.Ourteam.text002",
+    "Ourteam.Ourteam.text004"
+  ],
+  "Ourteam.group13": [
+    "Ourteam.Ourteam.text006",
+    "Ourteam.Ourteam.text007",
+    "Ourteam.Ourteam.text009"
+  ],
+  "Ourteam.group14": [
+    "Ourteam.Ourteam.text026",
+    "Ourteam.Ourteam.text027"
+  ],
+  "Ourteam.group15": [
+    "Ourteam.Ourteam.text037",
+    "Ourteam.Ourteam.text038"
+  ],
+  "Home.group16": [
+    "Home.Home.text002",
+    "Home.Home.text006"
+  ],
+  "Home.group17": [
+    "Home.Home.text025",
+    "Home.Home.text027",
+    "Home.Home.text028",
+    "Home.Home.text029"
+  ],
+  "Home.group18": [
+    "Home.Home.text040",
+    "Home.Home.text041"
+  ],
+  "Publications.group19": [
+    "Publications.Publications.text002",
+    "Publications.Publications.text004"
+  ],
+  "Publications.group20": [
+    "Publications.Publications.text009",
+    "Publications.Publications.text010"
+  ]
+}

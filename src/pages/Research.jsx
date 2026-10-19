@@ -1,3 +1,4 @@
+import EditableGroup from "../editor/EditableGroup";
 import EditableBlock from "../editor/EditableBlock";
 import EditableText from "../editor/EditableText";
 import { Link } from "react-router-dom";
@@ -10,8 +11,10 @@ export default function Research() {
     <div className="container inner-page">
       <header className="page-intro">
         <span className="eyebrow"><EditableText contentKey="Research.text001" /></span>
-        <EditableBlock as="h1" blockKey="Research.Research.text002"><EditableText contentKey="Research.text002" /><br /><EditableText contentKey="Research.text003" /></EditableBlock>
+        <EditableGroup groupKey="Research.group1">
+<EditableBlock as="h1" blockKey="Research.Research.text002"><EditableText contentKey="Research.text002" /><br /><EditableText contentKey="Research.text003" /></EditableBlock>
         <EditableBlock as="p" blockKey="Research.Research.text004"><EditableText contentKey="Research.text004" /></EditableBlock>
+</EditableGroup>
       </header>
       <div className="research-methods">
         <span className="eyebrow"><EditableText contentKey="Research.text005" /></span>
@@ -48,28 +51,36 @@ export default function Research() {
       ))}
       <section className="research-projects">
         <span className="eyebrow"><EditableText contentKey="Research.text014" /></span>
-        <EditableBlock as="h2" blockKey="Research.Research.text015"><EditableText contentKey="Research.text015" /></EditableBlock>
+        <EditableGroup groupKey="Research.group2">
+<EditableBlock as="h2" blockKey="Research.Research.text015"><EditableText contentKey="Research.text015" /></EditableBlock>
         <EditableBlock as="p" blockKey="Research.Research.text016" className="note"><EditableText contentKey="Research.text016" /></EditableBlock>
+</EditableGroup>
         <div className="row-list">
           <div className="detail-row">
             <span className="detail-year">2026–2028</span>
             <div>
-              <EditableBlock as="h3" blockKey="Research.Research.text017"><EditableText contentKey="Research.text017" /></EditableBlock>
+              <EditableGroup groupKey="Research.group3">
+<EditableBlock as="h3" blockKey="Research.Research.text017"><EditableText contentKey="Research.text017" /></EditableBlock>
               <EditableBlock as="p" blockKey="Research.Research.text018"><EditableText contentKey="Research.text018" /></EditableBlock>
+</EditableGroup>
             </div>
           </div>
           <div className="detail-row">
             <span className="detail-year">2026–2028</span>
             <div>
-              <EditableBlock as="h3" blockKey="Research.Research.text019"><EditableText contentKey="Research.text019" /></EditableBlock>
+              <EditableGroup groupKey="Research.group4">
+<EditableBlock as="h3" blockKey="Research.Research.text019"><EditableText contentKey="Research.text019" /></EditableBlock>
               <EditableBlock as="p" blockKey="Research.Research.text020"><EditableText contentKey="Research.text020" /></EditableBlock>
+</EditableGroup>
             </div>
           </div>
           <div className="detail-row">
             <span className="detail-year"><EditableText contentKey="Research.text021" /></span>
             <div>
-              <EditableBlock as="h3" blockKey="Research.Research.text022"><EditableText contentKey="Research.text022" /></EditableBlock>
+              <EditableGroup groupKey="Research.group5">
+<EditableBlock as="h3" blockKey="Research.Research.text022"><EditableText contentKey="Research.text022" /></EditableBlock>
               <EditableBlock as="p" blockKey="Research.Research.text023"><EditableText contentKey="Research.text023" /></EditableBlock>
+</EditableGroup>
             </div>
           </div>
         </div>

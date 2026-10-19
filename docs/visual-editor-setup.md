@@ -53,3 +53,9 @@ API: `/api/editor?action=...`, using a Vercel Node 22 Function. GitHub OAuth tok
 - Browser check: normal site, signed-in edit, type/paste, navigate, preview, undo, save, then reload after deployment. OAuth/publishing needs the real production app and environment configuration.
 
 If `/research` works only when reached from Home, `vercel.json` also supplies the SPA history fallback. The `/api` and asset routes are excluded.
+
+### Layout and text appearance
+
+Click a paragraph or heading, then use Color, Italic, Width and Align in the editor toolbar. These settings apply to the whole selected paragraph or heading. Reset style restores its original appearance; it does not restore deleted paragraphs or reset ordering. All controls participate in Preview, Undo changes, and Save & publish.
+
+Adjacent headings and paragraphs in a content section have a small ⠿ handle while editing. Drag the handle onto another paragraph in the same section to move it to that position. Move up / Move down offer the same operation for keyboard and touch users. Moving across sections, photos or cards is not supported. Deleted blocks can be restored with their style and order retained. The handles disappear in Preview and on the public site.

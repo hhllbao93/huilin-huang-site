@@ -1,6 +1,6 @@
 import { useEffect, useSyncExternalStore } from 'react';
-import { changeBlock, getSnapshot, pendingChanges, restoreDeletedBlocks, subscribe, updateState } from './content-store';
-import { FONT_SIZES, readBlockSettings } from './block-settings';
+import { changeBlock, moveBlock, getSnapshot, pendingChanges, restoreDeletedBlocks, subscribe, updateState } from './content-store';
+import { FONT_SIZES, groupForBlock, orderedGroup, readBlockSettings } from './block-settings';
 import './editor.css';
 
 async function api(action, body) {
@@ -34,6 +34,10 @@ export default function EditorToolbar() {
   const blocks = readBlockSettings(state.content);
   const selected = blocks[state.selectedBlock] || {};
   const hiddenCount = Object.values(blocks).filter((block) => block.hidden).length;
+  const group = groupForBlock(state.selectedBlock);
+  const visible = orderedGroup(state.content, group).filter((key) => !blocks[key]?.hidden);
+  const position = visible.indexOf(state.selectedBlock);
+  const disabled = state.busy || !state.selectedBlock;
   const kind = state.selectedKind === 'p' ? 'paragraph' : 'heading';
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -62,7 +66,7 @@ export default function EditorToolbar() {
     finally { updateState({ busy: false }); }
   }
   async function exit() {
-    if (dirty && !window.confirm('Discard your unsaved text changes?')) return;
+    if (dirty && !window.confirm('Discard your unsaved changes?')) return;
     updateState({ busy: true });
     try {
       if (state.authenticated) await api('logout', {});
@@ -89,11 +93,29 @@ export default function EditorToolbar() {
             {FONT_SIZES.map((size) => <option key={size} value={size}>{size}px</option>)}
           </select>
         </label>
+        <label className="editor-font-size">Color
+          <input type="color" aria-label="Text color" disabled={disabled} value={selected.color || '#263e32'} onChange={(event) => changeBlock({ color: event.target.value })} />
+        </label>
+        <button type="button" disabled={disabled} aria-pressed={selected.italic === true} onClick={() => changeBlock({ italic: !selected.italic })}><i>Italic</i></button>
+        <label className="editor-font-size">Width
+          <select aria-label="Block width" disabled={disabled} value={selected.width || 'default'} onChange={(event) => changeBlock({ width: event.target.value === 'default' ? null : Number(event.target.value) })}>
+            <option value="default">Default</option>
+            {[25, 50, 65, 75, 85, 100].map((width) => <option key={width} value={width}>{width}%</option>)}
+          </select>
+        </label>
+        <label className="editor-font-size">Align
+          <select aria-label="Text alignment" disabled={disabled} value={selected.align || 'default'} onChange={(event) => changeBlock({ align: event.target.value === 'default' ? null : event.target.value })}>
+            <option value="default">Default</option><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option>
+          </select>
+        </label>
+        <button type="button" disabled={disabled || position <= 0} onClick={() => moveBlock(group, state.selectedBlock, visible[position - 1])}>↑ Move up</button>
+        <button type="button" disabled={disabled || position < 0 || position >= visible.length - 1} onClick={() => moveBlock(group, state.selectedBlock, visible[position + 1])}>↓ Move down</button>
+        <button type="button" disabled={disabled} onClick={() => changeBlock({ size: null, color: null, italic: null, width: null, align: null })}>Reset style</button>
         <button className="editor-delete" type="button" disabled={state.busy || !state.selectedBlock} onClick={() => changeBlock({ hidden: true })}>Delete {kind}</button>
       </>}
       {hiddenCount > 0 && <button type="button" disabled={state.busy} onClick={restoreDeletedBlocks}>Restore deleted ({hiddenCount})</button>}
       <button type="button" disabled={state.busy} onClick={() => updateState({ editing: !state.editing })}>{state.editing ? 'Preview' : 'Continue editing'}</button>
-      <button type="button" disabled={state.busy || !dirty} onClick={() => { if (window.confirm('Discard all unsaved text changes?')) updateState({ content: state.baseline, selectedBlock: null, message: '' }); }}>Undo changes</button>
+      <button type="button" disabled={state.busy || !dirty} onClick={() => { if (window.confirm('Discard all unsaved changes?')) updateState({ content: state.baseline, selectedBlock: null, message: '' }); }}>Undo changes</button>
       <button className="editor-publish" type="button" disabled={state.busy || !dirty} onClick={publish}>{state.busy ? 'Saving…' : 'Save & publish'}</button>
       <button type="button" disabled={state.busy} onClick={exit}>Exit</button>
       {state.message && <p role="status">{state.message}</p>}

@@ -1,8 +1,9 @@
 import { useEffect, useSyncExternalStore } from 'react';
-import { getSnapshot, subscribe, updateState } from './content-store';
-import { readBlockSettings } from './block-settings';
+import { getSnapshot, moveBlock, subscribe, updateState } from './content-store';
+import { blockStyle, readBlockSettings } from './block-settings';
 
-export default function EditableBlock({ as: Tag = 'p', blockKey, children, className = '', style, ...props }) {
+let dragging = null;
+export default function EditableBlock({ as: Tag = 'p', blockKey, groupKey, children, className = '', style, ...props }) {
   const state = useSyncExternalStore(subscribe, getSnapshot);
   const settings = readBlockSettings(state.content)[blockKey] || {};
   useEffect(() => () => {
@@ -14,15 +15,17 @@ export default function EditableBlock({ as: Tag = 'p', blockKey, children, class
       updateState({ selectedBlock: blockKey, selectedKind: Tag });
     }
   }
-  const fontSize = settings.size ? `clamp(${Math.min(settings.size, 24)}px, calc(1rem + 4vw), ${settings.size}px)` : undefined;
+  const canDrop = () => state.editing && !state.busy && dragging?.group === groupKey && dragging?.key !== blockKey;
   return (
-    <Tag
-      {...props}
-      data-editable-block={blockKey}
-      className={`${className}${state.editing && state.selectedBlock === blockKey ? ' editor-selected-block' : ''}`}
-      style={{ ...style, ...(fontSize ? { fontSize } : {}) }}
-      onFocusCapture={select}
-      onClickCapture={select}
-    >{children}</Tag>
+    <Tag {...props} data-editable-block={blockKey}
+      className={`${className}${state.editing ? ' editor-block' : ''}${state.editing && state.selectedBlock === blockKey ? ' editor-selected-block' : ''}${settings.color ? ' editor-custom-color' : ''}${settings.italic !== undefined ? ' editor-custom-italic' : ''}`}
+      style={{ ...style, ...blockStyle(settings) }} onFocusCapture={select} onClickCapture={select}
+      onDragOver={(event) => { if (canDrop()) { event.preventDefault(); event.dataTransfer.dropEffect = 'move'; } }}
+      onDrop={(event) => { if (canDrop()) { event.preventDefault(); moveBlock(groupKey, dragging.key, blockKey); dragging = null; } }}
+    >{state.editing && groupKey && <button type="button" className="editor-drag-handle" contentEditable={false}
+        draggable={!state.busy} disabled={state.busy} aria-label="Drag to reorder within this section" title="Drag to reorder within this section"
+        onClick={(event) => { event.preventDefault(); event.stopPropagation(); select(); }}
+        onDragStart={(event) => { select(); dragging = { group: groupKey, key: blockKey }; event.dataTransfer.setData('text/plain', blockKey); event.dataTransfer.effectAllowed = 'move'; }}
+        onDragEnd={() => { dragging = null; }}>⠿</button>}{children}</Tag>
   );
 }
