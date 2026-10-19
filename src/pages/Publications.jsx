@@ -1,10 +1,21 @@
+import EditableText from "../editor/EditableText";
+import { useSyncExternalStore } from "react";
+import { getSnapshot, subscribe } from "../editor/content-store";
 import { useSearchParams } from "react-router-dom";
 import { FiArrowUpRight, FiSearch } from "react-icons/fi";
-import { publications } from "../data/publications";
+import { publications as originalPublications } from "../data/publications";
 import cv from "../assets/Huilin_Huang_CV.pdf";
 import "./Publications.css";
 
 export default function Publications() {
+  const { content } = useSyncExternalStore(subscribe, getSnapshot);
+  const publications = originalPublications.map((p, index) => ({
+    ...p,
+    editKey: `publications.${index}`,
+    title: content[`publications.${index}.title`] ?? p.title,
+    authors: content[`publications.${index}.authors`] ?? p.authors,
+    journal: content[`publications.${index}.journal`] ?? p.journal,
+  }));
   const [params, setParams] = useSearchParams();
   const query = params.get("q") || "";
   const status = params.get("status") || "All";
@@ -36,22 +47,14 @@ export default function Publications() {
   return (
     <div className="container inner-page">
       <header className="page-intro">
-        <span className="eyebrow">Publications / A growing body of work</span>
-        <h1>
-          Ideas, tested.
-          <br />
-          Knowledge, shared.
-        </h1>
-        <p>
-          Research on wildfire, climate, land surface processes, and their
-          interactions. Publication details and manuscript statuses reflect the
-          December 2025 CV.
-        </p>
+        <span className="eyebrow"><EditableText contentKey="Publications.text001" /></span>
+        <h1><EditableText contentKey="Publications.text002" /><br /><EditableText contentKey="Publications.text003" /></h1>
+        <p><EditableText contentKey="Publications.text004" /></p>
       </header>
       <div className="publication-toolbar">
         <label className="search-field">
           <FiSearch aria-hidden="true" />
-          <span className="sr-only">Search publications</span>
+          <span className="sr-only"><EditableText contentKey="Publications.text005" /></span>
           <input
             type="search"
             value={query}
@@ -59,9 +62,7 @@ export default function Publications() {
             placeholder="Search title, author, or journal…"
           />
         </label>
-        <label className="year-filter">
-          Year
-          <select
+        <label className="year-filter"><EditableText contentKey="Publications.text006" /><select
             aria-label="Publication year"
             value={year}
             onChange={(e) => update("year", e.target.value)}
@@ -76,9 +77,7 @@ export default function Publications() {
           className="text-link"
           href={cv}
           download="Huilin_Huang_CV_Dec2025.pdf"
-        >
-          Full CV ↓
-        </a>
+        ><EditableText contentKey="Publications.text008" /></a>
       </div>
       <div
         className="publication-filters"
@@ -102,7 +101,7 @@ export default function Publications() {
       </p>
       <div className="publication-list">
         {filtered.map((p) => (
-          <article className="publication" key={p.title}>
+          <article className="publication" key={p.editKey}>
             <div className="publication-year">
               {p.year || "Manuscript"}
               <span className="tag">
@@ -115,7 +114,7 @@ export default function Publications() {
             </div>
             <div>
               <span className="publication-journal">
-                {p.journal || "Work in progress"}
+                <EditableText contentKey={`${p.editKey}.journal`}>{p.journal || "Work in progress"}</EditableText>
               </span>
               <h2>
                 {p.doi ? (
@@ -124,27 +123,23 @@ export default function Publications() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {p.title}{" "}
+                    {<EditableText contentKey={`${p.editKey}.title`}>{p.title}</EditableText>}{" "}
                     <FiArrowUpRight aria-label="Opens article in a new tab" />
                   </a>
                 ) : (
-                  p.title
+                  <EditableText contentKey={`${p.editKey}.title`}>{p.title}</EditableText>
                 )}
               </h2>
-              <p>{p.authors}</p>
+              <p>{<EditableText contentKey={`${p.editKey}.authors`}>{p.authors}</EditableText>}</p>
             </div>
           </article>
         ))}
       </div>
       {filtered.length === 0 && (
         <div className="empty-state">
-          <h2>No publications found.</h2>
-          <p>
-            Try a different search or clear the filters to see all publications.
-          </p>
-          <button className="button" onClick={() => setParams({})}>
-            Clear filters
-          </button>
+          <h2><EditableText contentKey="Publications.text009" /></h2>
+          <p><EditableText contentKey="Publications.text010" /></p>
+          <button className="button" onClick={() => setParams({})}><EditableText contentKey="Publications.text011" /></button>
         </div>
       )}
     </div>

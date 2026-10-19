@@ -1,3 +1,4 @@
+import EditableText from "../editor/EditableText";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 import portrait from "../assets/Huilin.jpeg";
@@ -11,26 +12,16 @@ export default function Home() {
       <section className="container hero">
         <div className="hero-copy">
           <span className="eyebrow">
-            <span className="status-dot" /> University of Virginia ·
-            Environmental Sciences
-          </span>
-          <h1>
-            Understanding Land–Atmosphere 
-            <br />
-            Interactions
-            <br />
-            and Climate <em>Extremes</em>.
+            <span className="status-dot" /><EditableText contentKey="Home.text001" /></span>
+          <h1><EditableText contentKey="Home.text002" /><br /><EditableText contentKey="Home.text003" /><br /><EditableText contentKey="Home.text004" /><em><EditableText contentKey="Home.text005" /></em>.
             <br />
           </h1>
-          <p>
-            Our research integrates numerical modeling, satellite observations, and data-driven approaches to understand interactions among climate, terrestrial ecosystems, and extreme events, with a current emphasis on wildfire dynamics and impacts.
-          </p>
-          <Link to="/research" className="button">
-            Explore our research <FiArrowUpRight />
+          <p><EditableText contentKey="Home.text006" /></p>
+          <Link to="/research" className="button"><EditableText contentKey="Home.text007" /><FiArrowUpRight />
           </Link>
           <div className="hero-footnote">
-            <span>THE Climate Extremes & Earth System LAB</span>
-            <span>CHARLOTTESVILLE, VA</span>
+            <span><EditableText contentKey="Home.text008" /></span>
+            <span><EditableText contentKey="Home.text009" /></span>
           </div>
         </div>
         <div className="hero-visual">
@@ -40,48 +31,37 @@ export default function Home() {
             fetchPriority="high"
           />
           <div className="image-topline">
-            <span>FIRE · CLIMATE · ECOSYSTEMS</span>
+            <span><EditableText contentKey="Home.text010" /></span>
             <span aria-hidden="true">↗</span>
           </div>
           <div className="image-caption">
             <span className="image-caption-line" />
-            <p>
-              Connected systems.
-              <br />
-              Shared futures.
-            </p>
-            <span>OBSERVATIONS × MODELS × MACHINE LEARNING</span>
+            <p><EditableText contentKey="Home.text011" /><br /><EditableText contentKey="Home.text012" /></p>
+            <span><EditableText contentKey="Home.text013" /></span>
           </div>
         </div>
       </section>
       <div className="research-strip">
         <div className="container">
-          <span>OUR LENS</span>
-          <span>Wildfire dynamics</span>
+          <span><EditableText contentKey="Home.text014" /></span>
+          <span><EditableText contentKey="Home.text015" /></span>
           <span className="strip-star" aria-hidden="true">
             ✳
           </span>
-          <span>Land–atmosphere interactions</span>
+          <span><EditableText contentKey="Home.text016" /></span>
           <span className="strip-star" aria-hidden="true">
             ✳
           </span>
-          <span>Ecosystem resilience</span>
+          <span><EditableText contentKey="Home.text017" /></span>
         </div>
       </div>
       <section className="container section research-overview">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">01 / Our research</span>
-            <h2>
-              A changing planet.
-              <br />
-              Questions that connect us.
-            </h2>
+            <span className="eyebrow"><EditableText contentKey="Home.text018" /></span>
+            <h2><EditableText contentKey="Home.text019" /><br /><EditableText contentKey="Home.text020" /></h2>
           </div>
-          <p>
-            We bring together observations, process-based models, and machine
-            learning to understand environmental change across scales.
-          </p>
+          <p><EditableText contentKey="Home.text021" /></p>
         </div>
         <div className="theme-grid">
           {themes.map((theme, index) => (
@@ -94,10 +74,9 @@ export default function Home() {
                 <span>0{index + 1}</span>
                 <FiArrowUpRight />
               </div>
-              <h3>{theme.title}</h3>
-              <p>{theme.short}</p>
-              <span className="theme-bottom">
-                Explore this theme <FiArrowRight />
+              <h3>{<EditableText contentKey={`themes.${theme.id}.title`}>{theme.title}</EditableText>}</h3>
+              <p>{<EditableText contentKey={`themes.${theme.id}.short`}>{theme.short}</EditableText>}</p>
+              <span className="theme-bottom"><EditableText contentKey="Home.text022" /><FiArrowRight />
               </span>
             </Link>
           ))}
@@ -107,42 +86,25 @@ export default function Home() {
         <div className="container profile-grid">
           <div className="profile-image">
             <img src={portrait} alt="Dr. Huilin Huang" loading="lazy" />
-            <span>HUILIN HUANG, Ph.D.</span>
+            <span><EditableText contentKey="Home.text023" /></span>
           </div>
           <div className="profile-copy">
-            <span className="eyebrow">
-              02 / Meet the principal investigator
-            </span>
-            <h2>
-              Connecting the dots
-              <br />
-              between fire & climate.
-            </h2>
+            <span className="eyebrow"><EditableText contentKey="Home.text024" /></span>
+            <h2><EditableText contentKey="Home.text025" /><br /><EditableText contentKey="Home.text026" /></h2>
             <p className="profile-role">
               Dr. Huilin Huang{" "}
-              <span>Assistant Professor · University of Virginia</span>
+              <span><EditableText contentKey="Home.text027" /></span>
             </p>
-            <p>
-              My research examines how wildfire and land cover change interact
-              with the carbon cycle and the atmosphere. I develop and apply
-              Earth system models alongside satellite observations and machine
-              learning to investigate these connected processes.
-            </p>
-            <p>
-              Before joining UVA in 2025, I worked as an Earth Scientist and
-              postdoctoral researcher at Pacific Northwest National Laboratory.
-              I earned my Ph.D. in Geography from UCLA in 2021.
-            </p>
+            <p><EditableText contentKey="Home.text028" /></p>
+            <p><EditableText contentKey="Home.text029" /></p>
             <div className="profile-actions">
-              <Link className="text-link" to="/ourteam">
-                Meet our people <FiArrowUpRight />
+              <Link className="text-link" to="/ourteam"><EditableText contentKey="Home.text030" /><FiArrowUpRight />
               </Link>
               <a
                 className="text-link"
                 href={cv}
                 download="Huilin_Huang_CV_Dec2025.pdf"
-              >
-                Download CV <span aria-hidden="true">↓</span>
+              ><EditableText contentKey="Home.text031" /><span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
@@ -151,41 +113,31 @@ export default function Home() {
       <section className="container section">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">03 / Selected publications</span>
-            <h2>Science in focus.</h2>
+            <span className="eyebrow"><EditableText contentKey="Home.text032" /></span>
+            <h2><EditableText contentKey="Home.text033" /></h2>
           </div>
-          <Link className="text-link" to="/publications">
-            All publications <FiArrowUpRight />
+          <Link className="text-link" to="/publications"><EditableText contentKey="Home.text034" /><FiArrowUpRight />
           </Link>
         </div>
         <Link to="/publications?q=canopy" className="featured-paper">
-          <span className="paper-meta">
-            EARTH’S FUTURE<span>2025</span>
+          <span className="paper-meta"><EditableText contentKey="Home.text035" /><span>2025</span>
           </span>
-          <h3>
-            Elevated forest canopy loss after wildfires in moist and cool
-            forests in the Pacific Northwest
-          </h3>
+          <h3><EditableText contentKey="Home.text036" /></h3>
           <FiArrowUpRight aria-hidden="true" />
         </Link>
         <Link to="/publications?q=ML4Fire" className="featured-paper">
-          <span className="paper-meta">
-            GEOSCIENTIFIC MODEL DEVELOPMENT<span>2025</span>
+          <span className="paper-meta"><EditableText contentKey="Home.text037" /><span>2025</span>
           </span>
-          <h3>ML4Fire-XGBv1.0: Improving North American wildfire prediction</h3>
+          <h3><EditableText contentKey="Home.text038" /></h3>
           <FiArrowUpRight aria-hidden="true" />
         </Link>
         <div className="join-band">
           <div>
-            <span className="eyebrow">Science is a shared endeavor</span>
-            <h2>Let’s ask the next question.</h2>
-            <p>
-              Interested in wildfire, climate, and environmental change? Connect
-              with our lab.
-            </p>
+            <span className="eyebrow"><EditableText contentKey="Home.text039" /></span>
+            <h2><EditableText contentKey="Home.text040" /></h2>
+            <p><EditableText contentKey="Home.text041" /></p>
           </div>
-          <Link className="button" to="/opportunities">
-            Get involved <FiArrowUpRight />
+          <Link className="button" to="/opportunities"><EditableText contentKey="Home.text042" /><FiArrowUpRight />
           </Link>
         </div>
       </section>

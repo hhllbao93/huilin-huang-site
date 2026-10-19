@@ -1,74 +1,43 @@
+import EditableText from "../editor/EditableText";
 import { FiArrowUpRight } from "react-icons/fi";
 
 export default function Opportunities() {
   return (
     <div className="container inner-page">
       <header className="page-intro">
-        <span className="eyebrow">Opportunities / Start a conversation</span>
-        <h1>
-          Big questions.
-          <br />
-          New perspectives.
-        </h1>
-        <p>
-          Interested in the connections between wildfire, climate, and
-          ecosystems? Get in touch to discuss research interests and possible
-          ways to work together.
-        </p>
+        <span className="eyebrow"><EditableText contentKey="Opportunities.text001" /></span>
+        <h1><EditableText contentKey="Opportunities.text002" /><br /><EditableText contentKey="Opportunities.text003" /></h1>
+        <p><EditableText contentKey="Opportunities.text004" /></p>
       </header>
       <div className="split">
         <section>
-          <span className="eyebrow">Students & researchers</span>
-          <h2>
-            Explore a shared
-            <br />
-            research direction.
-          </h2>
-          <p>
-            Tell us about your background, the questions you want to
-            investigate, and your experience or interests in environmental
-            science, numerical modeling, remote sensing, or machine learning.
-          </p>
-          <p>
-            For inquiries about potential graduate, undergraduate, or
-            postdoctoral opportunities, please contact Dr. Huilin Huang
-            directly.
-          </p>
-          <p className="note">
-            Contact the lab for current availability and funding information.
-          </p>
+          <span className="eyebrow"><EditableText contentKey="Opportunities.text005" /></span>
+          <h2><EditableText contentKey="Opportunities.text006" /><br /><EditableText contentKey="Opportunities.text007" /></h2>
+          <p><EditableText contentKey="Opportunities.text008" /></p>
+          <p><EditableText contentKey="Opportunities.text009" /></p>
+          <p className="note"><EditableText contentKey="Opportunities.text010" /></p>
         </section>
         <section>
-          <span className="eyebrow">Collaborators</span>
-          <h2>
-            Connect ideas
-            <br />
-            across disciplines.
-          </h2>
-          <p>
-            Our research connects fire dynamics, land–atmosphere interactions,
-            and terrestrial biogeochemistry. We welcome conversations about
-            complementary observations, modeling approaches, and environmental
-            questions.
-          </p>
+          <span className="eyebrow"><EditableText contentKey="Opportunities.text011" /></span>
+          <h2><EditableText contentKey="Opportunities.text012" /><br /><EditableText contentKey="Opportunities.text013" /></h2>
+          <p><EditableText contentKey="Opportunities.text014" /></p>
           <div className="tags">
-            <span className="tag">Wildfire</span>
-            <span className="tag">Earth system science</span>
-            <span className="tag">Machine learning</span>
+            <span className="tag"><EditableText contentKey="Opportunities.text015" /></span>
+            <span className="tag"><EditableText contentKey="Opportunities.text016" /></span>
+            <span className="tag"><EditableText contentKey="Opportunities.text017" /></span>
           </div>
         </section>
       </div>
       <div className="join-band">
         <div>
-          <span className="eyebrow">Contact the principal investigator</span>
-          <h2>Dr. Huilin Huang</h2>
-          <p>Department of Environmental Sciences · University of Virginia</p>
+          <span className="eyebrow"><EditableText contentKey="Opportunities.text018" /></span>
+          <h2><EditableText contentKey="Opportunities.text019" /></h2>
+          <p><EditableText contentKey="Opportunities.text020" /></p>
         </div>
         <a
           className="button"
           href="mailto:mgh4rc@virginia.edu?subject=Research%20inquiry"
-        >
-          Email Huilin <FiArrowUpRight />
+        ><EditableText contentKey="Opportunities.text021" /><FiArrowUpRight />
         </a>
       </div>
     </div>

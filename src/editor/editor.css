@@ -1,0 +1,13 @@
+.editable-text { outline: 1px dashed #89714c; outline-offset: 4px; cursor: text; white-space: pre-wrap; min-width: 1ch; }
+.editable-text:hover, .editable-text:focus { outline: 2px solid #b14f2d; background: #ffedbd80; }
+.editable-text:empty { display: inline-block; min-width: 2rem; min-height: 1em; }
+.editor-entry { padding: 1rem 5%; text-align: right; background: #f8f7f2; }
+.editor-entry p { color: #9b3b25; }
+.editor-entry button, .editor-toolbar button { font: 500 14px/1.4 system-ui, sans-serif; padding: .65rem 1rem; border: 1px solid #c9d3cd; border-radius: 6px; color: #263e32; background: #fff; cursor: pointer; }
+.editor-toolbar { position: fixed; z-index: 10000; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; width: min(960px, calc(100% - 24px)); padding: 16px; border: 1px solid #cad4ce; border-radius: 12px; background: #f8faf8; color: #263e32; box-shadow: 0 8px 36px #10291d33; font: 14px/1.4 system-ui, sans-serif; }
+.editor-toolbar div { flex: 1; min-width: 220px; }
+.editor-toolbar small { display: block; margin-top: 4px; }
+.editor-toolbar .editor-publish { background: #263e32; color: white; }
+.editor-toolbar button:disabled { opacity: .45; cursor: default; }
+.editor-toolbar p { flex-basis: 100%; margin: 0; }
+body:has(.editor-toolbar) { padding-bottom: 160px; }
