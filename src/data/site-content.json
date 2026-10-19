@@ -14,12 +14,12 @@
   "Research.text013": "Explore publications ",
   "Research.text014": "From understanding to application",
   "Research.text015": "Selected funded projects",
-  "Research.text016": "Project information from the December 2025 CV.",
+  "Research.text016": "",
   "Research.text017": "From prediction to practice",
   "Research.text018": "A high-resolution fire-response framework to enhance community resilience. UVA Environmental Institute · Principal Investigator.",
   "Research.text019": "Next-generation forest fire modeling",
   "Research.text020": "Very-high-resolution remote sensing and deep learning. UVA Environmental Institute · Co-Principal Investigator.",
-  "Research.text021": "2024–ongoing",
+  "Research.text021": "2024–2026",
   "Research.text022": "An integrated climate–energy–wildfire model",
   "Research.text023": "Assessing the impact of energy systems on wildfires. U.S. Department of Energy · Co-Principal Investigator.",
   "Teaching.text001": "Teaching / Learning across disciplines",
@@ -168,7 +168,7 @@
   "themes.extreme.short": "Understanding how climate variability and change drive land surface extremes and shape their predictability.",
   "themes.extreme.description": "We investigate how climate variability and change, land surface conditions, and human activities influence the occurrence, intensity, and evolution of extreme events. Our current research emphasizes fire regimes and fire behavior prediction across spatial and temporal scales.",
   "themes.extreme.example": "Global burned area increasingly explained by climate change (Nature Climate Change, 2024).",
-  "themes.extreme.methods.0": "Satellite observations",
+  "themes.extreme.methods.0": "SATELLITE OBSERVATIONS",
   "themes.extreme.methods.1": "Earth system modeling",
   "themes.extreme.methods.2": "Machine learning",
   "themes.carbon.title": "Ecosystem Processes & Carbon Cycling",
@@ -301,5 +301,5 @@
   "courses.0.institution": "",
   "courses.1.institution": "",
   "courses.2.institution": "",
-  "__blockSettings": "{}"
+  "__blockSettings": "{\"Home.Home.text006\":{\"size\":18},\"Research.Research.text016\":{\"hidden\":true}}"
 }
