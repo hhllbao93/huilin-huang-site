@@ -46,7 +46,7 @@ export default function EditorToolbar() {
   const inline = readInlineStyles(state.content);
   const firstStyle = firstSelection ? (inline[firstSelection.key] || []).find((run) => run.start <= firstSelection.start && run.end > firstSelection.start) || {} : {};
   const colorDisabled = state.busy || !hasSelection;
-  const kind = state.selectedKind === 'p' ? 'paragraph' : 'heading';
+  const kind = state.selectedKind === 'li' ? 'list item' : state.selectedKind === 'p' ? 'paragraph' : 'heading';
   useEffect(() => {
     const guard = (event) => guardEditorLink(event, getSnapshot());
     document.addEventListener('click', guard, true);

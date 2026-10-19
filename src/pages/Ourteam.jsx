@@ -107,11 +107,11 @@ export default function Ourteam() {
           <EditableBlock as="p" blockKey="Ourteam.Ourteam.text027" className="note"><EditableText contentKey="Ourteam.text027" /></EditableBlock>
 </EditableGroup>
           <ul className="plain-list">
-            <li><EditableText contentKey="Ourteam.text028" /><em><EditableText contentKey="Ourteam.text029" /></em><EditableText contentKey="Ourteam.text030" /></li>
-            <li><EditableText contentKey="Ourteam.text031" /><em><EditableText contentKey="Ourteam.text032" /></em><EditableText contentKey="Ourteam.text033" /></li>
-            <li><EditableText contentKey="Ourteam.text034" /></li>
-            <li><EditableText contentKey="Ourteam.text035" /></li>
-            <li><EditableText contentKey="Ourteam.text036" /></li>
+            <EditableBlock as="li" blockKey="Ourteam.Ourteam.text028"><EditableText contentKey="Ourteam.text028" /><em><EditableText contentKey="Ourteam.text029" /></em><EditableText contentKey="Ourteam.text030" /></EditableBlock>
+            <EditableBlock as="li" blockKey="Ourteam.Ourteam.text031"><EditableText contentKey="Ourteam.text031" /><em><EditableText contentKey="Ourteam.text032" /></em><EditableText contentKey="Ourteam.text033" /></EditableBlock>
+            <EditableBlock as="li" blockKey="Ourteam.Ourteam.text034"><EditableText contentKey="Ourteam.text034" /></EditableBlock>
+            <EditableBlock as="li" blockKey="Ourteam.Ourteam.text035"><EditableText contentKey="Ourteam.text035" /></EditableBlock>
+            <EditableBlock as="li" blockKey="Ourteam.Ourteam.text036"><EditableText contentKey="Ourteam.text036" /></EditableBlock>
           </ul>
         </div>
       </EditableSection>

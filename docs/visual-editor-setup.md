@@ -75,3 +75,5 @@ Click a heading and choose Remove empty lines to hide empty text rows and their 
 ### Whole sections on Our Team
 
 The PI introduction, Students, Experience and service, and Join the team each have a section handle and Move section up / Move section down controls while editing. Drag the section handle onto another section, or use the buttons, to move the entire area with its images, cards and text. For example, moving Students down once places it below Experience and service. Moving it up again returns it directly below the PI introduction. These controls disappear in Preview and on the public site. Save & publish persists the order; Undo changes restores the saved order. Whole-section sorting currently applies to the Our Team page.
+
+The Service & Outreach list on Our Team supports whole-item font size, width, alignment and deletion. Click any text within an item to select that list item, including items containing italic journal names. Font size applies to the complete selected item. Delete list item and Restore deleted use the same persistent settings as paragraphs.
