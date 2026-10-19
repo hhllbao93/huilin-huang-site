@@ -1,3 +1,4 @@
+import EditableText from "../editor/EditableText";
 import { Link } from "react-router-dom";
 import { FiArrowUpRight } from "react-icons/fi";
 import huilin from "../assets/Huilin.jpeg";
@@ -14,84 +15,59 @@ export default function Ourteam() {
   return (
     <div className="container inner-page">
       <header className="page-intro">
-        <span className="eyebrow">People / The minds behind the questions</span>
-        <h1>
-          Research is a<br />
-          collective pursuit.
-        </h1>
-        <p>
-          Meet the people exploring the relationships between wildfire,
-          ecosystems, and climate at the University of Virginia.
-        </p>
+        <span className="eyebrow"><EditableText contentKey="Ourteam.text001" /></span>
+        <h1><EditableText contentKey="Ourteam.text002" /><br /><EditableText contentKey="Ourteam.text003" /></h1>
+        <p><EditableText contentKey="Ourteam.text004" /></p>
       </header>
       <section className="pi-profile">
         <img className="pi-photo" src={huilin} alt="Dr. Huilin Huang" />
         <div>
-          <span className="eyebrow">Principal investigator</span>
-          <h2>Dr. Huilin Huang</h2>
-          <p className="pi-role">
-            Assistant Professor
-            <br />
-            Department of Environmental Sciences · University of Virginia
-          </p>
-          <p>
-            Huilin studies wildfire and land cover change, terrestrial carbon
-            cycling and biogeochemistry, and land–atmosphere interactions. Her
-            research combines numerical modeling, satellite observations, and
-            machine learning.
-          </p>
+          <span className="eyebrow"><EditableText contentKey="Ourteam.text005" /></span>
+          <h2><EditableText contentKey="Ourteam.text006" /></h2>
+          <p className="pi-role"><EditableText contentKey="Ourteam.text007" /><br /><EditableText contentKey="Ourteam.text008" /></p>
+          <p><EditableText contentKey="Ourteam.text009" /></p>
           <div className="profile-links">
-            <a className="text-link" href="mailto:mgh4rc@virginia.edu">
-              Email Huilin <FiArrowUpRight />
+            <a className="text-link" href="mailto:mgh4rc@virginia.edu"><EditableText contentKey="Ourteam.text010" /><FiArrowUpRight />
             </a>
             <a
               className="text-link"
               href={cv}
               download="Huilin_Huang_CV_Dec2025.pdf"
-            >
-              Download CV ↓
-            </a>
+            ><EditableText contentKey="Ourteam.text011" /></a>
           </div>
           <div className="pi-education">
-            <span className="eyebrow">Education</span>
+            <span className="eyebrow"><EditableText contentKey="Ourteam.text012" /></span>
             <p>
-              <strong>Ph.D. in Geography</strong> · UCLA, 2021
-              <br />
-              <strong>B.S. in Atmospheric Sciences</strong> · Nanjing
-              University, 2015
-            </p>
+              <strong><EditableText contentKey="Ourteam.text013" /></strong><EditableText contentKey="Ourteam.text014" /><br />
+              <strong><EditableText contentKey="Ourteam.text015" /></strong><EditableText contentKey="Ourteam.text016" /></p>
           </div>
         </div>
       </section>
       <section className="people-section">
-        <span className="eyebrow">Our team</span>
-        <h2>Curiosity, in good company.</h2>
+        <span className="eyebrow"><EditableText contentKey="Ourteam.text017" /></span>
+        <h2><EditableText contentKey="Ourteam.text018" /></h2>
         <div className="people-grid">
-          {members.map((member) => (
-            <article className="person" key={member.name}>
+          {members.map((member, memberIndex) => (
+            <article className="person" key={memberIndex}>
               {member.image ? (
                 <img src={member.image} alt={member.name} loading="lazy" />
               ) : (
                 <div className="person-initials" aria-hidden="true">
                   {member.initials}
-                  <span>WILD–URBAN LANDSCAPE FIRE LAB</span>
+                  <span><EditableText contentKey="Ourteam.text019" /></span>
                 </div>
               )}
-              <h3>{member.name}</h3>
-              <span className="person-role">Research Assistant</span>
-              <p>Computer Science · College of Arts and Sciences</p>
+              <h3><EditableText contentKey={`members.${memberIndex}.name`}>{member.name}</EditableText></h3>
+              <span className="person-role"><EditableText contentKey="Ourteam.text020" /></span>
+              <p><EditableText contentKey="Ourteam.text021" /></p>
             </article>
           ))}
         </div>
       </section>
       <section className="split people-section">
         <div>
-          <span className="eyebrow">Experience</span>
-          <h2>
-            A path through
-            <br />
-            Earth science.
-          </h2>
+          <span className="eyebrow"><EditableText contentKey="Ourteam.text022" /></span>
+          <h2><EditableText contentKey="Ourteam.text023" /><br /><EditableText contentKey="Ourteam.text024" /></h2>
           <div className="row-list">
             {[
               ["2025–present", "Assistant Professor", "University of Virginia"],
@@ -117,42 +93,24 @@ export default function Ourteam() {
           </div>
         </div>
         <div>
-          <span className="eyebrow">Professional community</span>
-          <h2>Service & collaboration.</h2>
-          <p className="note">Selected roles listed in the December 2025 CV.</p>
+          <span className="eyebrow"><EditableText contentKey="Ourteam.text025" /></span>
+          <h2><EditableText contentKey="Ourteam.text026" /></h2>
+          <p className="note"><EditableText contentKey="Ourteam.text027" /></p>
           <ul className="plain-list">
-            <li>
-              Associate Editor, <em>Geophysical Research Letters</em> ·
-              2025–present
-            </li>
-            <li>
-              Early Career Editorial Board, <em>AGU Advances</em> · 2025–present
-            </li>
-            <li>
-              Ecosystem Impacts Strategy Team, FireSat Earth Fire Alliance ·
-              2025–present
-            </li>
-            <li>
-              Advisory Board, WCRP–CMIP Fire Model Intercomparison Project ·
-              2024–present
-            </li>
-            <li>
-              Session Convener, Fire–Ecosystem Interaction in a Changing
-              Environment · AGU 2025
-            </li>
+            <li><EditableText contentKey="Ourteam.text028" /><em><EditableText contentKey="Ourteam.text029" /></em><EditableText contentKey="Ourteam.text030" /></li>
+            <li><EditableText contentKey="Ourteam.text031" /><em><EditableText contentKey="Ourteam.text032" /></em><EditableText contentKey="Ourteam.text033" /></li>
+            <li><EditableText contentKey="Ourteam.text034" /></li>
+            <li><EditableText contentKey="Ourteam.text035" /></li>
+            <li><EditableText contentKey="Ourteam.text036" /></li>
           </ul>
         </div>
       </section>
       <div className="join-band">
         <div>
-          <h2>Bring your curiosity.</h2>
-          <p>
-            Interested in working with our group? We’d love to hear about your
-            research interests.
-          </p>
+          <h2><EditableText contentKey="Ourteam.text037" /></h2>
+          <p><EditableText contentKey="Ourteam.text038" /></p>
         </div>
-        <Link className="button" to="/opportunities">
-          Connect with us <FiArrowUpRight />
+        <Link className="button" to="/opportunities"><EditableText contentKey="Ourteam.text039" /><FiArrowUpRight />
         </Link>
       </div>
     </div>

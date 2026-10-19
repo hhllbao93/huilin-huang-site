@@ -1,3 +1,4 @@
+import EditableText from "../editor/EditableText";
 import "./Teaching.css";
 
 const courses = [
@@ -39,33 +40,24 @@ export default function Teaching() {
   return (
     <div className="container inner-page">
       <header className="page-intro">
-        <span className="eyebrow">
-          Teaching / Learning across disciplines
-        </span>
-        <h1>
-          Making sense of
-          <br />
-          our changing environment.
-        </h1>
-        <p>
-          Teaching and mentoring at the intersection of climate,
-          ecosystems, and biophysical processes.
-        </p>
+        <span className="eyebrow"><EditableText contentKey="Teaching.text001" /></span>
+        <h1><EditableText contentKey="Teaching.text002" /><br /><EditableText contentKey="Teaching.text003" /></h1>
+        <p><EditableText contentKey="Teaching.text004" /></p>
       </header>
 
       <section>
-        <span className="eyebrow">In the classroom</span>
-        <h2>Teaching experience</h2>
+        <span className="eyebrow"><EditableText contentKey="Teaching.text005" /></span>
+        <h2><EditableText contentKey="Teaching.text006" /></h2>
         <div className="row-list">
-          {courses.map(([year, title, institution]) => (
+          {courses.map(([year, title, institution], courseIndex) => (
             <article
               className="detail-row course-row"
               key={title}
             >
-              <span className="detail-year">{year}</span>
+              <span className="detail-year"><EditableText contentKey={`courses.${courseIndex}.year`}>{year}</EditableText></span>
               <div>
-                <h3>{title}</h3>
-                <p>{institution}</p>
+                <h3><EditableText contentKey={`courses.${courseIndex}.title`}>{title}</EditableText></h3>
+                <p><EditableText contentKey={`courses.${courseIndex}.institution`}>{institution}</EditableText></p>
               </div>
             </article>
           ))}
@@ -74,25 +66,19 @@ export default function Teaching() {
 
       <section className="mentoring-block split">
         <div>
-          <span className="eyebrow">Beyond the classroom</span>
-          <h2>
-            Supporting the
-            <br />
-            next generation.
-          </h2>
-          <p>
-            I mentor the next generation of scientists to think critically, pursue bold ideas, and address environmental challenges.
-          </p>
+          <span className="eyebrow"><EditableText contentKey="Teaching.text007" /></span>
+          <h2><EditableText contentKey="Teaching.text008" /><br /><EditableText contentKey="Teaching.text009" /></h2>
+          <p><EditableText contentKey="Teaching.text010" /></p>
         </div>
 
         <div>
-          <h3>Mentoring at UVA</h3>
-          {mentoring.map(({ title, students }) => (
+          <h3><EditableText contentKey="Teaching.text011" /></h3>
+          {mentoring.map(({ title, students }, mentoringIndex) => (
             <div className="detail-row" key={title}>
-              <span className="detail-year">2025–present</span>
+              <span className="detail-year"><EditableText contentKey="Teaching.text012" /></span>
               <div>
-                <h3>{title}</h3>
-                <p>{students}</p>
+                <h3><EditableText contentKey={`mentoring.${mentoringIndex}.title`}>{title}</EditableText></h3>
+                <p><EditableText contentKey={`mentoring.${mentoringIndex}.students`}>{students}</EditableText></p>
               </div>
             </div>
           ))}

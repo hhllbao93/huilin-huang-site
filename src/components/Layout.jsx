@@ -1,3 +1,4 @@
+import EditableText from "../editor/EditableText";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { FiArrowUpRight, FiMenu, FiX } from "react-icons/fi";
@@ -27,9 +28,7 @@ export default function Layout() {
   }, [pathname, hash]);
   return (
     <>
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
+      <a className="skip-link" href="#main-content"><EditableText contentKey="Layout.text001" /></a>
       <Header key={pathname} />
       <main id="main-content" tabIndex={-1}>
         <Outlet />
@@ -37,42 +36,29 @@ export default function Layout() {
       <footer className="site-footer">
         <div className="container footer-grid">
           <div>
-            <Link className="footer-name" to="/">
-              Huilin Huang<span>CLIMATE EXTREMES &amp; EARTH SYSTEM LAB</span>
+            <Link className="footer-name" to="/"><EditableText contentKey="Layout.text002" /><span><EditableText contentKey="Layout.text003" /></span>
             </Link>
-            <p>
-              Understanding fire. Connecting systems.
-              <br />
-              Informing a more resilient future.
-            </p>
+            <p><EditableText contentKey="Layout.text004" /><br /><EditableText contentKey="Layout.text005" /></p>
           </div>
           <div>
-            <span className="eyebrow">Find us</span>
-            <p>
-              Department of Environmental Sciences
-              <br />
-              University of Virginia
-              <br />
-              Charlottesville, Virginia
-            </p>
+            <span className="eyebrow"><EditableText contentKey="Layout.text006" /></span>
+            <p><EditableText contentKey="Layout.text007" /><br /><EditableText contentKey="Layout.text008" /><br /><EditableText contentKey="Layout.text009" /></p>
           </div>
           <div>
-            <span className="eyebrow">Let’s connect</span>
-            <a className="footer-contact" href="mailto:mgh4rc@virginia.edu">
-              mgh4rc@virginia.edu <FiArrowUpRight />
+            <span className="eyebrow"><EditableText contentKey="Layout.text010" /></span>
+            <a className="footer-contact" href="mailto:mgh4rc@virginia.edu"><EditableText contentKey="Layout.text011" /><FiArrowUpRight />
             </a>
             <a
               className="text-link"
               href={cv}
               download="Huilin_Huang_CV_Dec2025.pdf"
-            >
-              Download CV <span aria-hidden="true">↓</span>
+            ><EditableText contentKey="Layout.text012" /><span aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
         <div className="container footer-bottom">
           <span>© {new Date().getFullYear()} Huilin Huang</span>
-          <span>University of Virginia · Environmental Sciences</span>
+          <span><EditableText contentKey="Layout.text013" /></span>
         </div>
       </footer>
     </>
@@ -85,11 +71,9 @@ function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Link to="/" className="brand" aria-label="Huilin Huang lab home">
-          <span className="brand-mark" aria-hidden="true">
-            h<span>.</span>
+          <span className="brand-mark" aria-hidden="true"><EditableText contentKey="Layout.text014" /><span>.</span>
           </span>
-          <span>
-            HUILIN HUANG<small>CLIMATE EXTREMES &amp; EARTH SYSTEM LAB</small>
+          <span><EditableText contentKey="Layout.text015" /><small><EditableText contentKey="Layout.text016" /></small>
           </span>
         </Link>
         <button
@@ -117,8 +101,7 @@ function Header() {
               {label}
             </NavLink>
           ))}
-          <a href="mailto:mgh4rc@virginia.edu" className="nav-contact">
-            Get in touch <FiArrowUpRight />
+          <a href="mailto:mgh4rc@virginia.edu" className="nav-contact"><EditableText contentKey="Layout.text017" /><FiArrowUpRight />
           </a>
         </nav>
       </div>
